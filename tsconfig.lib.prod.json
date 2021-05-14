@@ -2,7 +2,33 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "declarationMap": false
+    "declarationMap": false,
+    "paths": {
+      "ngx-bit": [
+        "dist/ngx-bit",
+        "dist/ngx-bit/*"
+      ],
+      "ngx-bit/component": [
+        "dist/ngx-bit/component",
+        "dist/ngx-bit/component/*"
+      ],
+      "ngx-bit/directive": [
+        "dist/ngx-bit/directive",
+        "dist/ngx-bit/directive/*"
+      ],
+      "ngx-bit/operates": [
+        "dist/ngx-bit/operates",
+        "dist/ngx-bit/operates/*"
+      ],
+      "ngx-bit/pipe": [
+        "dist/ngx-bit/pipe",
+        "dist/ngx-bit/pipe/*"
+      ],
+      "@vanx/framework": [
+        "dist/framework",
+        "dist/framework/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableIvy": false
