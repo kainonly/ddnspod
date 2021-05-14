@@ -1,0 +1,20 @@
+export default {
+  currentVersion: ['当前版本', 'Current Version'],
+  remarkEmpty: ['无备注', 'Empty'],
+  table: ['数据库表', 'Table'],
+  type: ['模型类型', 'Model Type'],
+  columns: ['字段', 'Columns'],
+  indexs: ['索引', 'Indexs'],
+  column: ['字段名', 'Column'],
+  datatype: ['数据类型', 'Datatype'],
+  length: ['长度', 'Length'],
+  autoincrement: ['自增', 'Autoincrement'],
+  unsigned: ['无符号', 'Unsigned'],
+  notnull: ['不为空', 'Notnull'],
+  default: ['默认值', 'Default'],
+  comment: ['注释', 'Comment'],
+  commentEmpty: ['无注释', 'Empty'],
+  index: ['索引', 'Index'],
+  primary: ['主键', 'Primary'],
+  unique: ['唯一', 'Unique']
+};

@@ -1,0 +1,68 @@
+<nz-space nzDirection="vertical" [nzSize]="0">
+  <nz-upload
+    *nzSpaceItem
+    bitUpload
+    nzListType="picture-card"
+    [nzShowUploadList]="true"
+    [nzShowButton]="!uploadDisabled()"
+    [(nzFileList)]="fileList"
+    (nzFileListChange)="updateValue()"
+    (nzChange)="upload($event)"
+    [nzPreview]="picturePreview"
+  >
+    <div>
+      <i nz-icon nzType="plus"></i>
+      <div style="margin-top: 8px">{{ bit.l["upload"] }}</div>
+    </div>
+  </nz-upload>
+  <ng-container *nzSpaceItem>
+    <ng-container *ngIf="allowSort">
+      <a (click)="openSort('picture')">
+        <i nz-icon nzType="sort-ascending"></i>
+        {{ bit.l["sort"] }}
+      </a>
+      <nz-divider nzType="vertical"></nz-divider>
+    </ng-container>
+    <a (click)="openMedia('picture')">
+      <i nz-icon nzType="inbox"></i>
+      {{ bit.l["formPicture"] }}
+    </a>
+  </ng-container>
+</nz-space>
+
+<ng-template #mediaTitle>
+  {{ bit.l['picture'] }}
+  <bit-transport
+    class="ant-modal-title-extra"
+    [action]="mediaModal.componentInstance.transport"
+    (actionComplete)="mediaModal.componentInstance.transportComplete()"
+  ></bit-transport>
+</ng-template>
+
+<ng-template #previewRef>
+  <ng-container *ngIf="previewUrl">
+    <img [src]="previewUrl" [ngStyle]="{ width: '100%' }" />
+  </ng-container>
+</ng-template>
+
+<ng-template #sortRef>
+  <nz-list nzSize="small" cdkDropList (cdkDropListDropped)="sort($event)">
+    <nz-list-item *ngFor="let file of fileList" class="drag-item" cdkDrag>
+      <nz-list-item-meta [nzAvatar]="metaRef">
+        <ng-template #metaRef>
+          <nz-avatar
+            [nzSrc]="thumb(file.originFileObj ? bit.static + file.originFileObj['key'] : file.url)"
+          >
+          </nz-avatar>
+        </ng-template>
+        <nz-list-item-meta-title>
+          {{ file.originFileObj ? bit.static + file.originFileObj["key"] : file.url }}
+        </nz-list-item-meta-title>
+      </nz-list-item-meta>
+      <div class="drag-placeholder" *cdkDragPlaceholder>
+        <i nz-icon nzType="arrow-down"></i>
+        <h5>{{ bit.l["move"] }}</h5>
+      </div>
+    </nz-list-item>
+  </nz-list>
+</ng-template>

@@ -1,0 +1,125 @@
+<bit-header back>
+  <bit-i18n-switch></bit-i18n-switch>
+</bit-header>
+
+<nz-card>
+  <form nz-form [formGroup]="form" (bitFormSubmit)="submit($event)">
+    <nz-form-item formGroupName="name" bitI18nUpdate>
+      <nz-form-label bitCol="label" nzRequired>
+        <span>
+          {{ bit.l["name"] }}
+          <i
+            nz-icon
+            nz-tooltip
+            [nzTooltipTitle]="bit.l['i18nTip']"
+            nzType="translation"
+          >
+          </i>
+        </span>
+      </nz-form-label>
+      <ng-container *ngFor="let x of bit.i18nContain">
+        <nz-form-control
+          *ngIf="bit.equalI18n(x)"
+          nzHasFeedback
+          bitCol="control"
+          [nzErrorTip]="name.ref"
+        >
+          <input
+            nz-input
+            [nz-tooltip]="tooltip.ref"
+            [formControlName]="x"
+            [placeholder]="bit.l['namePlaceholder']"
+          />
+          <bit-i18n-tooltip #tooltip groupName="name"></bit-i18n-tooltip>
+          <bit-error-tip
+            #name
+            [hasError]="{
+              required: bit.l['nameRequire']
+            }"
+          ></bit-error-tip>
+        </nz-form-control>
+      </ng-container>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label bitCol="label" nzRequired>
+        {{ bit.l["table"] }}
+      </nz-form-label>
+      <nz-form-control
+        bitCol="control"
+        nzHasFeedback
+        [nzValidatingTip]="bit.l['validating']"
+        [nzErrorTip]="key.ref"
+      >
+        <input nz-input formControlName="table" [placeholder]="bit.l['tablePlaceholder']" />
+        <bit-error-tip
+          #key
+          [hasError]="{
+            required: bit.l['tableRequire'],
+            duplicated: bit.l['tableDuplicated']
+          }"
+        ></bit-error-tip>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label bitCol="label" nzRequired>
+        {{ bit.l["type"] }}
+      </nz-form-label>
+      <nz-form-control bitCol="control">
+        <nz-select formControlName="type" [nzPlaceHolder]="bit.l['typePlaceholder']">
+          <ng-container *ngFor="let item of type">
+            <nz-option
+              [nzValue]="item.value"
+              [nzLabel]="item.label | object: bit.locale"
+            ></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label bitCol="label">
+        {{ bit.l["description"] }}
+      </nz-form-label>
+      <nz-form-control bitCol="control">
+        <textarea
+          rows="4"
+          nz-input
+          formControlName="description"
+          [placeholder]="bit.l['descriptionPlaceholder']"
+        >
+        </textarea>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label bitCol="label" nzRequired>
+        {{ bit.l["status"] }}
+      </nz-form-label>
+      <nz-form-control bitCol="control">
+        <nz-switch
+          formControlName="status"
+          [nzCheckedChildren]="bit.l['on']"
+          [nzUnCheckedChildren]="bit.l['off']"
+        >
+        </nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-divider></nz-divider>
+
+    <nz-form-item>
+      <nz-form-control bitCol="submit">
+        <nz-space>
+          <button *nzSpaceItem nz-button nzType="primary" [disabled]="!form.valid">
+            <i nz-icon nzType="check"></i> {{ bit.l["submit"] }}
+          </button>
+          <button *nzSpaceItem nz-button type="button" bitBack>
+            <i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}
+          </button>
+        </nz-space>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>
