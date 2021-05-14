@@ -1,0 +1,131 @@
+<bit-header>
+  <button nz-button nzType="primary" [bitOpen]="['schema-add']">
+    <span>{{ bit.l["add"] }}</span>
+  </button>
+</bit-header>
+
+<ng-template #title>
+  <nz-space>
+    <ng-container *ngIf="lists.hasSearch('type')">
+      <nz-select
+        *nzSpaceItem
+        style="width: 200px"
+        [bitSearchChange]="lists"
+        [(ngModel)]="lists.search['type'].value"
+        (after)="getLists(true)"
+      >
+        <ng-container *ngFor="let item of type">
+          <nz-option [nzValue]="item.value" [nzLabel]="item.label | object: bit.locale"></nz-option>
+        </ng-container>
+      </nz-select>
+    </ng-container>
+    <ng-container *ngIf="lists.hasSearch('name->' + bit.locale)">
+      <nz-input-group *nzSpaceItem nzSearch [nzAddOnAfter]="nzAddOnAfter" style="width: 320px">
+        <input
+          nz-input
+          [bitSearchStart]="lists"
+          [placeholder]="bit.l['search']"
+          [(ngModel)]="lists.search['name->' + bit.locale].value"
+          (after)="getLists(true)"
+        />
+      </nz-input-group>
+      <ng-template #nzAddOnAfter>
+        <button
+          nz-button
+          nzType="primary"
+          nzSearch
+          [bitSearchStart]="lists"
+          (after)="getLists(true)"
+        >
+          <i nz-icon nzType="search"></i>
+        </button>
+      </ng-template>
+    </ng-container>
+    <button *nzSpaceItem nz-button nzType="default" (click)="getLists(true)">
+      <i nz-icon nzType="sync"></i> {{ bit.l["refreshLists"] }}
+    </button>
+    <button
+      *nzSpaceItem
+      nz-button
+      nzType="default"
+      [bitSearchClear]="lists"
+      (after)="getLists(true)"
+    >
+      <i nz-icon nzType="clear"></i> {{ bit.l["clearSearch"] }}
+    </button>
+  </nz-space>
+</ng-template>
+
+<nz-card [nzTitle]="title">
+  <nz-table
+    #table
+    [nzData]="lists.data"
+    [nzLoading]="lists.loading"
+    [nzTotal]="lists.totals"
+    [nzPageSize]="lists.limit"
+    [nzFrontPagination]="false"
+    [(nzPageIndex)]="lists.index"
+    (nzPageIndexChange)="getLists(false, $event)"
+    nzSize="middle"
+  >
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        nzWidth="65px"
+        [(nzChecked)]="lists.checked"
+        [nzIndeterminate]="lists.indeterminate"
+        (nzCheckedChange)="lists.checkedAll($event)"
+      ></th>
+      <th nzWidth="300px">{{ bit.l["name"] }}</th>
+      <th nzWidth="300px">{{ bit.l["table"] }}</th>
+      <th>{{ bit.l["status"] }}</th>
+      <th nzWidth="300px" nzRight="0px">{{ bit.l["action"] }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of table.data">
+      <td
+        nzShowCheckbox
+        [(nzChecked)]="data.checked"
+        (nzCheckedChange)="lists.refreshStatus()"
+      ></td>
+      <td>
+        {{ data.name | object: bit.locale }}
+        <ng-container *ngIf="data.description">
+          <i nz-icon nzType="info-circle" [nz-tooltip]="data.description"></i>
+        </ng-container>
+      </td>
+      <td>{{ data.table }}</td>
+      <td>
+        <nz-switch
+          [(ngModel)]="data.status"
+          [nzCheckedChildren]="bit.l['on']"
+          [nzUnCheckedChildren]="bit.l['off']"
+          [bitStatusChange]="schemaService.status(data)"
+        >
+        </nz-switch>
+      </td>
+      <td>
+        <a [bitOpen]="['schema-option', data.id]">
+          <i nz-icon nzType="database"></i> {{ bit.l["setting"] }}
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <ng-container *ngIf="data.type !== 0">
+          <a [bitOpen]="['schema-history', data.id]">
+            <i nz-icon nzType="history"></i> {{ bit.l["history"] }}
+          </a>
+          <nz-divider nzType="vertical"></nz-divider>
+        </ng-container>
+        <a [bitOpen]="['schema-edit', data.id]">
+          <i nz-icon nzType="edit"></i> {{ bit.l["edit"] }}
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="deleteData([data.id])">
+          <i nz-icon nzType="delete"></i> {{ bit.l["delete"] }}
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

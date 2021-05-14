@@ -1,0 +1,16 @@
+<tinymce
+  *ngIf="!refresh"
+  class="richtext-for-tinymce"
+  [(ngModel)]="value"
+  (ngModelChange)="updateValue()"
+  [config]="config"
+></tinymce>
+
+<ng-template #mediaTitle>
+  {{ bit.l[mediaType] }}
+  <bit-transport
+    class="ant-modal-title-extra"
+    [action]="mediaModal.componentInstance.transport"
+    (actionComplete)="mediaModal.componentInstance.transportComplete()"
+  ></bit-transport>
+</ng-template>

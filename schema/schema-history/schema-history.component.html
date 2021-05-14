@@ -1,0 +1,136 @@
+<bit-header back></bit-header>
+
+<div nz-row [nzGutter]="16">
+  <div nz-col nzFlex="360px" style="height: 640px">
+    <nz-card [nzBordered]="false" class="timeline">
+      <nz-timeline [nzMode]="'alternate'">
+        <nz-timeline-item [nzColor]="isActived('main')">
+          <a (click)="open('main')">main</a>
+          <p>{{ bit.l["currentVersion"] }}</p>
+        </nz-timeline-item>
+        <ng-container *ngFor="let x of lists">
+          <nz-timeline-item [nzColor]="isActived(x.version)">
+            <a (click)="open(x.version)">
+              {{ x.version * 1000 | date: "yyyy-MM-dd HH:mm:ss" }}
+            </a>
+            <p>
+              <ng-container *ngIf="x.remark">{{ x.remark }}</ng-container>
+              <ng-container *ngIf="!x.remark">{{ bit.l["remarkEmpty"] }}</ng-container>
+            </p>
+          </nz-timeline-item>
+        </ng-container>
+      </nz-timeline>
+    </nz-card>
+  </div>
+  <div nz-col nzFlex="auto">
+    <nz-card
+      *ngIf="data"
+      [nzTitle]="data.name | object: bit.locale"
+      [nzBordered]="false"
+      [nzExtra]="nzExtra"
+    >
+      <ng-template #nzExtra></ng-template>
+      <nz-descriptions [nzColumn]="2" nzBordered>
+        <nz-descriptions-item [nzTitle]="bit.l['table']">{{ data.table }}</nz-descriptions-item>
+        <nz-descriptions-item [nzTitle]="bit.l['type']">
+          {{ type[data.type].label | object: bit.locale }}
+        </nz-descriptions-item>
+        <ng-container *ngIf="table">
+          <nz-descriptions-item [nzSpan]="2" [nzTitle]="bit.l['columns']">
+            <nz-table
+              #columnsTable
+              [nzSize]="'small'"
+              [nzFrontPagination]="false"
+              [nzShowPagination]="false"
+              [nzData]="table['columns']"
+            >
+              <thead>
+              <tr>
+                <th nzWidth="60px"></th>
+                <th>{{ bit.l["column"] }}</th>
+                <th>{{ bit.l["datatype"] }}</th>
+                <th>{{ bit.l["autoincrement"] }}</th>
+                <th>{{ bit.l["unsigned"] }}</th>
+                <th>{{ bit.l["notnull"] }}</th>
+                <th>{{ bit.l["default"] }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <ng-container *ngFor="let data of columnsTable.data">
+                <tr>
+                  <td [nzExpand]="expands.has(data.name)" (nzExpandChange)="openComment(data.name)"></td>
+                  <td>{{ data.name }}</td>
+                  <td>
+                    {{ data.type }}
+                    <ng-container *ngIf="data.length"> ({{ data.length }})</ng-container>
+                  </td>
+                  <td>
+                    <ng-container *ngIf="data.autoincrement">
+                      <i nz-icon nzType="check"></i> {{bit.l['yes']}}
+                    </ng-container>
+                  </td>
+                  <td>
+                    <ng-container *ngIf="data.unsigned">
+                      <i nz-icon nzType="check"></i> {{bit.l['yes']}}
+                    </ng-container>
+                  </td>
+                  <td>
+                    <ng-container *ngIf="data.notnull">
+                      <i nz-icon nzType="check"></i> {{bit.l['yes']}}
+                    </ng-container>
+                  </td>
+                  <td>{{ data.default }}</td>
+                </tr>
+                <tr [nzExpand]="expands.has(data.name)">
+                  <ng-container *ngIf="data.comment">
+                    {{data.comment}}
+                  </ng-container>
+                  <ng-container *ngIf="!data.comment">
+                    {{bit.l['commentEmpty']}}
+                  </ng-container>
+                </tr>
+              </ng-container>
+              </tbody>
+            </nz-table>
+          </nz-descriptions-item>
+          <nz-descriptions-item [nzSpan]="2" [nzTitle]="bit.l['indexs']">
+            <nz-table
+              #indexsTable
+              [nzSize]="'small'"
+              [nzFrontPagination]="false"
+              [nzShowPagination]="false"
+              [nzData]="table['indexs']"
+            >
+              <thead>
+              <tr>
+                <th>{{ bit.l["index"] }}</th>
+                <th>{{ bit.l["column"] }}</th>
+                <th>{{ bit.l["primary"] }}</th>
+                <th>{{ bit.l["unique"] }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of indexsTable.data">
+                <td>{{ data.name }}</td>
+                <td>
+                  {{ data.columns }}
+                </td>
+                <td>
+                  <ng-container *ngIf="data.primary">
+                    <i nz-icon nzType="check"></i> {{bit.l['yes']}}
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="data.unique">
+                    <i nz-icon nzType="check"></i> {{bit.l['yes']}}
+                  </ng-container>
+                </td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </nz-descriptions-item>
+        </ng-container>
+      </nz-descriptions>
+    </nz-card>
+  </div>
+</div>
