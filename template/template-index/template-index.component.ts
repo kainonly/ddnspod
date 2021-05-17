@@ -9,7 +9,7 @@ import { TemplateService } from '../template.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-template-index',
+  selector: 'v-template-index',
   templateUrl: './template-index.component.html'
 })
 export class TemplateIndexComponent implements OnInit {

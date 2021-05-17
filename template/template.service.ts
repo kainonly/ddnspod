@@ -4,10 +4,10 @@ import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class TemplateService {
-  private model;
+  protected model: string;
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

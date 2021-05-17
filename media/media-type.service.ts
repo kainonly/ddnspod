@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class MediaTypeService {
-  private model: string;
+  protected model: string;
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

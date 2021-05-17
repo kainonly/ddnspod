@@ -5,10 +5,10 @@ import { BitHttpService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class SchemaService {
-  private model = 'schema';
+  protected model = 'schema';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

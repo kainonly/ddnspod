@@ -13,7 +13,7 @@ import { PageService } from '../page.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-template-page',
+  selector: 'v-template-page',
   templateUrl: './template-page.component.html'
 })
 export class TemplatePageComponent implements OnInit {
