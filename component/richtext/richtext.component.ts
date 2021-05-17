@@ -6,7 +6,7 @@ import { MediaComponent } from '@vanx/cms/media';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-richtext',
+  selector: 'v-richtext',
   templateUrl: './richtext.component.html',
   styleUrls: ['./richtext.component.scss'],
   providers: [

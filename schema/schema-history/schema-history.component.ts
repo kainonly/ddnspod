@@ -8,7 +8,7 @@ import * as packer from './language';
 
 
 @Component({
-  selector: 'van-schema-history',
+  selector: 'v-schema-history',
   templateUrl: './schema-history.component.html',
   styleUrls: ['./schema-history.component.scss']
 })

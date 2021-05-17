@@ -4,7 +4,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'van-video',
+  selector: 'v-video',
   templateUrl: './video.component.html',
   styleUrls: ['media-input.scss'],
   providers: [

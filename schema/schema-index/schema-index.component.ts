@@ -6,7 +6,7 @@ import { SchemaType } from '../schema-type';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-schema-index',
+  selector: 'v-schema-index',
   templateUrl: './schema-index.component.html'
 })
 export class SchemaIndexComponent implements OnInit {

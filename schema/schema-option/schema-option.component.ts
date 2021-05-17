@@ -13,7 +13,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-schema-option',
+  selector: 'v-schema-option',
   templateUrl: './schema-option.component.html',
   styleUrls: ['./schema-option.component.scss']
 })

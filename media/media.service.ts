@@ -5,12 +5,12 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MediaService {
-  private model: string;
+  protected model: string;
 
   constructor(
-    private http: BitHttpService,
-    private bit: BitService,
-    private config: BitConfigService
+    protected http: BitHttpService,
+    protected bit: BitService,
+    protected config: BitConfigService
   ) {
   }
 

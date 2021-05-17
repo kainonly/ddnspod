@@ -19,7 +19,7 @@ import { MediaDataSource } from './media.data-source';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-media',
+  selector: 'v-media',
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.scss']
 })

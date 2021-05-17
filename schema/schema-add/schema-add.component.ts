@@ -9,7 +9,7 @@ import { SchemaType } from '../schema-type';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-schema-add',
+  selector: 'v-schema-add',
   templateUrl: './schema-add.component.html'
 })
 export class SchemaAddComponent implements OnInit {

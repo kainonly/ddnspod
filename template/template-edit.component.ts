@@ -3,7 +3,7 @@ import { TemplatePageComponent } from './template-page/template-page.component';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'van-template-edit',
+  selector: 'v-template-edit',
   templateUrl: './template-page/template-page.component.html'
 })
 export class TemplateEditComponent extends TemplatePageComponent {

@@ -11,7 +11,7 @@ import { SchemaService } from '../schema.service';
 import * as packer from './language';
 
 @Component({
-  selector: 'van-schema-edit',
+  selector: 'v-schema-edit',
   templateUrl: './schema-edit.component.html'
 })
 export class SchemaEditComponent implements OnInit {

@@ -4,7 +4,7 @@ import { MediaInput } from './media-input';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'van-picture',
+  selector: 'v-picture',
   templateUrl: './picture.component.html',
   styleUrls: ['media-input.scss'],
   providers: [

@@ -4,10 +4,10 @@ import { BitHttpService } from 'ngx-bit';
 
 @Injectable()
 export class PageService {
-  private model = 'page';
+  protected model = 'page';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 

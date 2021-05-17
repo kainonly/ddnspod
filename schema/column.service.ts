@@ -4,10 +4,10 @@ import { BitHttpService } from 'ngx-bit';
 
 @Injectable()
 export class ColumnService {
-  private model = 'column';
+  protected model = 'column';
 
   constructor(
-    private http: BitHttpService
+    protected http: BitHttpService
   ) {
   }
 
