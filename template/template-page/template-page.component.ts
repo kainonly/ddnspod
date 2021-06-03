@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitEventsService, BitService, BitSwalService } from 'ngx-bit';
+import { BitService, BitSwalService } from 'ngx-bit';
 import { ColumnService } from '@vanx/cms/schema';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -32,7 +32,6 @@ export class TemplatePageComponent implements OnInit {
   constructor(
     public bit: BitService,
     protected swal: BitSwalService,
-    private events: BitEventsService,
     private fb: FormBuilder,
     private message: NzMessageService,
     private modal: NzModalService,
