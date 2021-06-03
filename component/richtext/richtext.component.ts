@@ -1,9 +1,10 @@
 import { Component, forwardRef, Input, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { BitEventsService, BitService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MediaComponent } from '@vanx/cms/media';
 import * as packer from './language';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'v-richtext',
@@ -36,9 +37,10 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
   mediaType: string;
   mediaModal: NzModalRef<MediaComponent, any>;
 
+  private localeChanged: Subscription;
+
   constructor(
     public bit: BitService,
-    private events: BitEventsService,
     private zone: NgZone,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef
@@ -83,9 +85,9 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
         }
       });
     };
-    this.events.on('locale').subscribe(locale => {
+    this.localeChanged = this.bit.localeChanged.subscribe(() => {
       this.refresh = true;
-      this.setTinymceLang(locale);
+      this.setTinymceLang(this.bit.locale);
       setTimeout(() => {
         this.refresh = false;
       });
@@ -93,7 +95,7 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   ngOnDestroy(): void {
-    this.events.off('locale');
+    this.localeChanged.unsubscribe();
   }
 
   updateValue(): void {
