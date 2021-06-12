@@ -1,5 +1,5 @@
 import { AfterContentInit, Component, HostListener, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BitConfigService, BitService } from 'ngx-bit';
+import { BitConfig, BitService } from 'ngx-bit';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalComponent, NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -55,7 +55,7 @@ export class MediaComponent implements OnInit, AfterContentInit {
   @ViewChild('deleteModalContentTpl') deleteModalContentTpl: TemplateRef<any>;
 
   constructor(
-    public config: BitConfigService,
+    public config: BitConfig,
     public bit: BitService,
     public system: SystemService,
     private mediaService: MediaService,

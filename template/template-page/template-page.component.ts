@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService, BitSwalService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { ColumnService } from '@vanx/cms/schema';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { BitSwalService } from 'ngx-bit/swal';
 import { TemplateService } from '../template.service';
 import { PageService } from '../page.service';
 import * as packer from './language';

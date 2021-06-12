@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BitService } from 'ngx-bit';
 import { ColumnService } from '../column.service';
 import { SchemaService } from '../schema.service';

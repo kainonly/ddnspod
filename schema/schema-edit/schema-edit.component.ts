@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { BitService, BitSwalService } from 'ngx-bit';
+import { Component, OnInit } from '@angular/core';
+import { BitService } from 'ngx-bit';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { switchMap } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { asyncValidator } from 'ngx-bit/operates';
 import { SchemaType } from '../schema-type';
 import { SchemaService } from '../schema.service';
 import * as packer from './language';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-schema-edit',

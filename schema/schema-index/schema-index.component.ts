@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BitService, BitSwalService, ListByPage } from 'ngx-bit';
+import { BitService, ListByPage } from 'ngx-bit';
 import { SchemaService } from '../schema.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SchemaType } from '../schema-type';
 import * as packer from './language';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-schema-index',

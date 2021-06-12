@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService, BitSwalService } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { switchMap } from 'rxjs/operators';
 import { asyncValidator } from 'ngx-bit/operates';
 import { SchemaService } from '../schema.service';
 import { SchemaType } from '../schema-type';
 import * as packer from './language';
+import { BitSwalService } from 'ngx-bit/swal';
 
 @Component({
   selector: 'v-schema-add',

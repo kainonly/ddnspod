@@ -32,11 +32,11 @@
 
 <ng-template #mediaTitle>
   {{ bit.l['picture'] }}
-  <bit-transport
+  <v-transport
     class="ant-modal-title-extra"
     [action]="mediaModal.componentInstance.transport"
     (actionComplete)="mediaModal.componentInstance.transportComplete()"
-  ></bit-transport>
+  ></v-transport>
 </ng-template>
 
 <ng-template #previewRef>

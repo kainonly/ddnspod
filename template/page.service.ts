@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BitHttpService } from 'ngx-bit';
+import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
 
 @Injectable()
 export class PageService {
-  protected model = 'page';
+  private model = 'page';
 
   constructor(
-    protected http: BitHttpService
+    private http: BitHttpService,
+    private curd: BitCurdCommonService
   ) {
   }
 
   get(key: any): Observable<any> {
-    return this.http.get(this.model, [
+    return this.curd.get(this.model, [
       { field: 'key', op: '=', value: key }
     ]);
   }
