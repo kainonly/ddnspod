@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BitConfigService, BitHttpService, BitService } from 'ngx-bit';
+import { BitConfig, BitCurdCommonService, BitHttpService, BitService } from 'ngx-bit';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MediaService {
-  protected model: string;
+  private model: string;
 
   constructor(
-    protected http: BitHttpService,
-    protected bit: BitService,
-    protected config: BitConfigService
+    private http: BitHttpService,
+    private curd: BitCurdCommonService,
+    private bit: BitService,
+    private config: BitConfig
   ) {
   }
 
@@ -19,7 +20,7 @@ export class MediaService {
   }
 
   lists(search: any, refresh: boolean, persistence: boolean): Observable<any> {
-    return this.http.lists(this.model, search, {
+    return this.curd.lists(this.model, search, {
       refresh,
       persistence
     });
@@ -30,7 +31,7 @@ export class MediaService {
   }
 
   edit(data: any): Observable<any> {
-    return this.http.edit(this.model, data);
+    return this.curd.edit(this.model, data);
   }
 
   bulkEdit(data: any): Observable<any> {
@@ -38,7 +39,7 @@ export class MediaService {
   }
 
   delete(id: any[]): Observable<any> {
-    return this.http.delete(this.model, id);
+    return this.curd.delete(this.model, id);
   }
 
   count(): Observable<any> {

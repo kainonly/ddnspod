@@ -8,9 +8,9 @@
 
 <ng-template #mediaTitle>
   {{ bit.l[mediaType] }}
-  <bit-transport
+  <v-transport
     class="ant-modal-title-extra"
     [action]="mediaModal.componentInstance.transport"
     (actionComplete)="mediaModal.componentInstance.transportComplete()"
-  ></bit-transport>
+  ></v-transport>
 </ng-template>

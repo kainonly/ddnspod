@@ -1,16 +1,16 @@
 <bit-header *ngIf="header">
   <nz-alert
-    bitBanner
+    *bitHeaderBanner
     nzBanner
     nzType="info"
     nzCloseable
     [nzMessage]="bit.l['uploadTip']"
     (nzOnClose)="fetchInfiniteY()"
   ></nz-alert>
-  <bit-transport
+  <v-transport
     [action]="transport"
     (actionComplete)="transportComplete()"
-  ></bit-transport>
+  ></v-transport>
 </bit-header>
 
 <ng-template #title>

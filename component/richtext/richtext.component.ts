@@ -3,8 +3,8 @@ import { BitService } from 'ngx-bit';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MediaComponent } from '@vanx/cms/media';
-import * as packer from './language';
 import { Subscription } from 'rxjs';
+import * as packer from './language';
 
 @Component({
   selector: 'v-richtext',

@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { BitService, BitSwalService, ListByPage, SearchOption } from 'ngx-bit';
+import { BitService, ListByPage, SearchOption } from 'ngx-bit';
 import { ColumnService } from '@vanx/cms/schema';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { StorageMap } from '@ngx-pwa/local-storage';
+import { BitSwalService } from 'ngx-bit/swal';
 import { TemplateService } from '../template.service';
 import * as packer from './language';
 

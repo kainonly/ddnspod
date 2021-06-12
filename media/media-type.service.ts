@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BitHttpService } from 'ngx-bit';
+import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class MediaTypeService {
-  protected model: string;
+  private model: string;
 
   constructor(
-    protected http: BitHttpService
+    private http: BitHttpService,
+    private curd: BitCurdCommonService
   ) {
   }
 
@@ -16,19 +17,19 @@ export class MediaTypeService {
   }
 
   originLists(): Observable<any> {
-    return this.http.originLists(this.model);
+    return this.curd.originLists(this.model);
   }
 
   add(data: any): Observable<any> {
-    return this.http.add(this.model, data);
+    return this.curd.add(this.model, data);
   }
 
   edit(data: any): Observable<any> {
-    return this.http.edit(this.model, data);
+    return this.curd.edit(this.model, data);
   }
 
   delete(id: any[]): Observable<any> {
-    return this.http.delete(this.model, id);
+    return this.curd.delete(this.model, id);
   }
 
   sort(data: any[]): Observable<any> {
