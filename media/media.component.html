@@ -8,6 +8,7 @@
     (nzOnClose)="fetchInfiniteY()"
   ></nz-alert>
   <v-transport
+    *bitHeaderAction
     [action]="transport"
     (actionComplete)="transportComplete()"
   ></v-transport>
