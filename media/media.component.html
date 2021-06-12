@@ -127,7 +127,13 @@
       <i nz-icon nzType="sync"></i>
       {{ bit.l["refreshLists"] }}
     </button>
-    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="ds.lists" (after)="ds.fetchData(true)">
+    <button
+      *nzSpaceItem
+      nz-button
+      nzType="default"
+      [bitSearchClear]="ds.lists"
+      (after)="ds.fetchData(true)"
+    >
       <i nz-icon nzType="clear"></i>
       {{ bit.l["clearSearch"] }}
     </button>
@@ -250,14 +256,14 @@
   <nz-card [nzTitle]="title">
     <cdk-virtual-scroll-viewport
       class="infinite-container"
-      [itemSize]="8"
-      [ngStyle]="{ 'height.px': infiniteY$ | async }"
+      itemSize="231.5"
+      [ngStyle]="{ 'height.px': boundY }"
     >
-      <nz-list nzGrid>
+      <nz-list *ngIf="ds" #listPanel nzGrid [nzLoading]="ds.updating">
         <nz-list-empty *ngIf="ds.empty()"></nz-list-empty>
-        <div nz-row [nzGutter]="8">
-          <div nz-col *cdkVirtualFor="let x of ds">
-            <nz-list-item *ngIf="x">
+        <div *cdkVirtualFor="let items of ds" nz-row [nzGutter]="8">
+          <div *ngFor="let item of items" nz-col>
+            <nz-list-item *ngIf="item">
               <nz-card
                 style="width: 195px"
                 nzSize="small"
@@ -270,8 +276,8 @@
                     <ng-container *ngSwitchCase="'picture'">
                       <div
                         class="thumb"
-                        [style]="{ 'background-image': thumb(x.url) }"
-                        (click)="preview(x)"
+                        [style]="{ 'background-image': thumb(item.url) }"
+                        (click)="preview(item)"
                       >
                         <div class="thumb-actions">
                           <i nz-icon nzType="search"></i>
@@ -280,7 +286,7 @@
                     </ng-container>
                     <ng-container *ngSwitchCase="'video'">
                       <div class="video">
-                        <video [src]="bit.static + x.url" controls="controls"></video>
+                        <video [src]="bit.static + item.url" controls="controls"></video>
                       </div>
                     </ng-container>
                   </ng-container>
@@ -289,14 +295,14 @@
                   <i
                     nz-icon
                     nzType="link"
-                    [nz-tooltip]="x.copied ? copyTip : bit.static + x.url"
+                    [nz-tooltip]="item.copied ? copyTip : bit.static + item.url"
                     [nzTooltipMouseEnterDelay]="0.2"
-                    (click)="copy(x)"
+                    (click)="copy(item)"
                   ></i>
                   <ng-template #copyTip>
-                  <span nz-typography nzType="success">
-                    <i nz-icon nzType="check"></i>
-                  </span>
+                    <span nz-typography nzType="success">
+                      <i nz-icon nzType="check"></i>
+                    </span>
                     {{ bit.l["copied"] }}
                   </ng-template>
                 </ng-template>
@@ -306,7 +312,7 @@
                     nzType="edit"
                     [nz-tooltip]="bit.l['rename']"
                     [nzTooltipMouseEnterDelay]="0.2"
-                    (click)="openRenameModal(x)"
+                    (click)="openRenameModal(item)"
                   ></i>
                 </ng-template>
                 <ng-template #actionEllipsis>
@@ -320,11 +326,11 @@
                   ></i>
                   <nz-dropdown-menu #actionMenu>
                     <ul nz-menu>
-                      <li nz-menu-item (click)="openMoveModal([x])">
+                      <li nz-menu-item (click)="openMoveModal([item])">
                         <i nz-icon nzType="swap"></i>
                         {{ bit.l["move"] }}
                       </li>
-                      <li nz-menu-item (click)="openDeleteModal([x])">
+                      <li nz-menu-item (click)="openDeleteModal([item])">
                         <i nz-icon nzType="delete"></i>
                         {{ bit.l["deleteItem"] }}
                       </li>
@@ -336,12 +342,12 @@
                   <ng-template #cardTitle>
                     <label
                       nz-checkbox
-                      [(ngModel)]="x.checked"
+                      [(ngModel)]="item.checked"
                       (ngModelChange)="ds.lists.refreshStatus()"
-                      [nz-tooltip]="x.name"
+                      [nz-tooltip]="item.name"
                       [nzTooltipMouseEnterDelay]="0.2"
                     >
-                      {{ x.name }}
+                      {{ item.name }}
                     </label>
                   </ng-template>
                 </nz-card-meta>
