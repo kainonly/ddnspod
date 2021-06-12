@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, HostListener, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, HostListener, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BitConfig, BitService } from 'ngx-bit';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalComponent, NzModalService } from 'ng-zorro-antd/modal';
@@ -7,7 +7,7 @@ import { NzImageService } from 'ng-zorro-antd/image';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, of } from 'rxjs';
@@ -17,13 +17,14 @@ import { MediaService } from './media.service';
 import { MediaTypeService } from './media-type.service';
 import { MediaDataSource } from './media.data-source';
 import * as packer from './language';
+import { NzListComponent } from 'ng-zorro-antd/list';
 
 @Component({
   selector: 'v-media',
   templateUrl: './media.component.html',
   styleUrls: ['./media.component.scss']
 })
-export class MediaComponent implements OnInit, AfterContentInit {
+export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   @Input() key: string;
   header = false;
 
@@ -38,7 +39,9 @@ export class MediaComponent implements OnInit, AfterContentInit {
   typeCount: any = {};
   typeCountStyle = { backgroundColor: '#d1dade', color: '#5e5e5e', boxShadow: 'none' };
 
-  infiniteY$: Observable<any> = of(0);
+  @ViewChild('listPanel') listPanel: NzListComponent;
+
+  boundY = 400;
 
   @ViewChild('transportTpl') transportTpl: TemplateRef<any>;
 
@@ -85,12 +88,35 @@ export class MediaComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.fetchInfiniteY();
+    this.fetchBoundY();
+  }
+
+  ngAfterViewInit(): void {
+    this.fetchBoundX();
   }
 
   @HostListener('window:resize')
   onresize(): void {
-    this.fetchInfiniteY();
+    this.fetchBoundY();
+    this.fetchBoundX();
+  }
+
+  fetchBoundX(): void {
+    const el = this.listPanel['elementRef'].nativeElement;
+    this.ds.update(Math.trunc(el.offsetWidth / 203));
+  }
+
+  fetchBoundY(): void {
+    this.system.content.pipe(
+      take(1)
+    ).subscribe((content) => {
+      const node = content.nativeElement;
+      let height = node.offsetHeight;
+      for (const el of node.children[0].children) {
+        height -= el.offsetHeight;
+      }
+      this.boundY = height - 150;
+    });
   }
 
   transport = (files: NzUploadFile[]): Observable<any> => {
@@ -118,7 +144,7 @@ export class MediaComponent implements OnInit, AfterContentInit {
         { field: 'name', op: 'like', value: '' },
         { field: 'type_id', op: '=', value: '', exclude: [''] }
       ],
-      limit: 50
+      limit: 20
     });
     this.ds.lists.ready.subscribe(() => {
       this.getCount();
@@ -163,21 +189,6 @@ export class MediaComponent implements OnInit, AfterContentInit {
       default:
         return [this.typeMap.get(typeId).name, this.typeCount.hasOwnProperty(typeId) ? this.typeCount[typeId] : 0];
     }
-  }
-
-  fetchInfiniteY(): void {
-    this.infiniteY$ = this.system.layout.pipe(
-      map((elements: Element[]) => {
-        if (elements.length === 0) {
-          return 0;
-        }
-        let height = 0;
-        for (const ele of elements) {
-          height += ele.clientHeight;
-        }
-        return window.innerHeight - height - 150;
-      })
-    );
   }
 
   checkedAllBind(event: any): void {
