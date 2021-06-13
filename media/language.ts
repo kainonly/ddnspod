@@ -1,7 +1,7 @@
 export default {
   uploadTip: [
-    '上传元素将归属当前分类，每个上传文件大小限制在100MB',
-    'Uploaded elements will belong to the current category, and the size of each uploaded file is limited to 100MB'
+    '上传元素将归属当前分类，每个上传文件大小限制在5MB',
+    'Uploaded elements will belong to the current category, and the size of each uploaded file is limited to 5MB'
   ],
   checked: ['全选', 'Checked'],
   move: ['移动分类', 'Move Type'],

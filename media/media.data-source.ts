@@ -10,7 +10,6 @@ export class MediaDataSource extends DataSource<any> {
   private IDs = new Map<any, number>();
 
   updating = false;
-  private queue: any[] = [];
   private size: number;
   private stream = new BehaviorSubject<any[]>([]);
   private disconnect$ = new Subject<void>();
@@ -26,7 +25,6 @@ export class MediaDataSource extends DataSource<any> {
       return;
     }
     this.updating = true;
-    this.queue = [];
     this.size = size;
     this.fetchData(true);
   }
@@ -64,19 +62,18 @@ export class MediaDataSource extends DataSource<any> {
     this.lists.ready.pipe(
       switchMap(() => this.media.lists(this.lists, refresh, true))
     ).subscribe(data => {
+      const stack = [];
       this.lists.data.splice(this.lists.index * this.lists.limit, this.lists.limit, ...data);
       this.lists.data.forEach(((value, index) => {
         this.IDs.set(value.id, index);
         const key = Math.trunc(index / this.size);
-        if (!this.queue[key]) {
-          this.queue[key] = [];
+        if (!stack[key]) {
+          stack[key] = [];
         }
-        if (this.queue[key].length !== this.size) {
-          this.queue[key].push(value);
-        }
+        stack[key].push(value);
       }));
       this.lists.refreshStatus();
-      this.stream.next(this.queue);
+      this.stream.next(stack);
       this.updating = false;
     });
   }
