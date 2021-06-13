@@ -92,7 +92,9 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   }
 
   ngAfterViewInit(): void {
-    this.fetchBoundX();
+    this.route.params.subscribe(() => {
+      this.fetchBoundX();
+    });
   }
 
   @HostListener('window:resize')
