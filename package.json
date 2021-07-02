@@ -1,11 +1,11 @@
 {
   "name": "@vanx/cms",
-  "version": "11.0.1",
+  "version": "12.0.0",
   "private": false,
   "peerDependencies": {
-    "@angular/common": "^11.0.0",
-    "@angular/core": "^11.0.0",
-    "ngx-tinymce": "^11.0.0"
+    "@angular/common": "^12.0.0",
+    "@angular/core": "^12.0.0",
+    "ngx-tinymce": "^12.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0",
