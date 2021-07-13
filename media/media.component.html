@@ -129,7 +129,7 @@
   [nzWidth]="640"
   [nzVisible]="typeVisible"
   [nzTitle]="typeTitle"
-  [nzFooter]="typeSort ? typeFooter : null"
+  [nzFooter]="typeSort ? typeFooter : undefined"
   (nzOnClose)="closeTypeDrawer()"
 >
   <ng-template #typeFooter>
