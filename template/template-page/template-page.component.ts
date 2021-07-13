@@ -18,16 +18,16 @@ import * as packer from './language';
   templateUrl: './template-page.component.html'
 })
 export class TemplatePageComponent implements OnInit {
-  protected key: string;
-  protected id: string;
-  back = undefined;
+  protected key!: string;
+  protected id!: string;
+  back!: boolean;
 
-  columns: any[];
+  columns!: any[];
   protected columnMap = new Map();
-  form: FormGroup;
+  form!: FormGroup;
 
   assoc: {
-    [column: string]: any
+    [column: string]: any;
   } = {};
 
   constructor(
@@ -42,48 +42,51 @@ export class TemplatePageComponent implements OnInit {
     private columnService: ColumnService,
     private pageService: PageService,
     protected templateService: TemplateService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
-    this.route.params.pipe(
-      switchMap(params => {
-        this.key = params.key;
-        if (params.hasOwnProperty('id')) {
-          this.id = params.id;
-        }
-        const table = this.key.replace('-', '_');
-        this.templateService.setModel(table);
-        return this.columnService.originLists(table);
-      })
-    ).subscribe(data => {
-      const controls = {};
-      this.columns = data.filter(v => v.datatype !== 'system').map(v => {
-        v.name = JSON.parse(v.name);
-        v.extra = JSON.parse(v.extra);
-        switch (v.datatype) {
-          case 'i18n':
-            controls[v.column] = this.addI18nGroup(v);
-            break;
-          case 'richtext':
-            controls[v.column] = this.addI18nGroup(v);
-            break;
-          default:
-            if (v.datatype === 'assoc') {
-              this.getAssoc(v.schema, v.column, v.extra.assoc);
+    this.route.params
+      .pipe(
+        switchMap(params => {
+          this.key = params.key;
+          if (params.hasOwnProperty('id')) {
+            this.id = params.id;
+          }
+          const table = this.key.replace('-', '_');
+          this.templateService.setModel(table);
+          return this.columnService.originLists(table);
+        })
+      )
+      .subscribe(data => {
+        const controls: any = {};
+        this.columns = data
+          .filter((v: any) => v.datatype !== 'system')
+          .map((v: any) => {
+            v.name = JSON.parse(v.name);
+            v.extra = JSON.parse(v.extra);
+            switch (v.datatype) {
+              case 'i18n':
+                controls[v.column] = this.addI18nGroup(v);
+                break;
+              case 'richtext':
+                controls[v.column] = this.addI18nGroup(v);
+                break;
+              default:
+                if (v.datatype === 'assoc') {
+                  this.getAssoc(v.schema, v.column, v.extra.assoc);
+                }
+                controls[v.column] = [v.extra.default];
+                if (v.extra.required) {
+                  controls[v.column][1] = [Validators.required];
+                }
             }
-            controls[v.column] = [v.extra.default];
-            if (v.extra.required) {
-              controls[v.column][1] = [Validators.required];
-            }
-        }
-        this.columnMap.set(v.column, v);
-        return v;
+            this.columnMap.set(v.column, v);
+            return v;
+          });
+        this.form = this.fb.group(controls);
+        this.getData();
       });
-      this.form = this.fb.group(controls);
-      this.getData();
-    });
   }
 
   /**
@@ -127,22 +130,25 @@ export class TemplatePageComponent implements OnInit {
    * 设置关联
    */
   private getAssoc(schema: string, column: string, assoc: string): void {
-    const value = {};
-    this.templateService.assoc(assoc).pipe(
-      switchMap(data => {
-        value['items'] = data;
-        return this.columnService.get(schema, column);
-      })
-    ).subscribe(data => {
-      value['datatype'] = data.datatype;
-      this.assoc[column] = value;
-    });
+    const value: Record<string, any> = {};
+    this.templateService
+      .assoc(assoc)
+      .pipe(
+        switchMap(data => {
+          value['items'] = data;
+          return this.columnService.get(schema, column);
+        })
+      )
+      .subscribe(data => {
+        value['datatype'] = data.datatype;
+        this.assoc[column] = value;
+      });
   }
 
   /**
    * 提交
    */
-  submit(data): void {
+  submit(data: any): void {
     Reflect.set(data, 'key', this.key);
     if (!data.hasOwnProperty('title')) {
       data.title = {};

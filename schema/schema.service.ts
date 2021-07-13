@@ -7,11 +7,7 @@ import { BitCurdCommonService, BitHttpService, ListByPage } from 'ngx-bit';
 export class SchemaService {
   protected model = 'schema';
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   originLists(type: any): Observable<any> {
     return this.curd.originLists(this.model, [{ field: 'type', op: '=', value: type }]);
@@ -52,15 +48,11 @@ export class SchemaService {
   }
 
   history(table: any): Observable<any> {
-    return this.http.req(this.model + '/history', { table }).pipe(
-      map(res => !res.error ? res.data : null)
-    );
+    return this.http.req(this.model + '/history', { table }).pipe(map(res => (!res.error ? res.data : null)));
   }
 
   table(table: any): Observable<any> {
-    return this.http.req(this.model + '/table', { table }).pipe(
-      map(res => !res.error ? res.data : null)
-    );
+    return this.http.req(this.model + '/table', { table }).pipe(map(res => (!res.error ? res.data : null)));
   }
 
   validedTable(table: string, edit: Observable<string> = of(null)): Observable<any> {

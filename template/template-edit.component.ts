@@ -15,14 +15,15 @@ export class TemplateEditComponent extends TemplatePageComponent {
     });
   }
 
-  submit(data): void {
+  submit(data: any): void {
     Reflect.set(data, 'id', this.id);
-    this.templateService.edit(data).pipe(
-      switchMap(res => this.swal.editAlert(res))
-    ).subscribe((status) => {
-      if (status) {
-        this.getData();
-      }
-    });
+    this.templateService
+      .edit(data)
+      .pipe(switchMap(res => this.swal.editAlert(res)))
+      .subscribe(status => {
+        if (status) {
+          this.getData();
+        }
+      });
   }
 }

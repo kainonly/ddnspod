@@ -16,9 +16,9 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './schema-edit.component.html'
 })
 export class SchemaEditComponent implements OnInit {
-  private id: number;
+  private id!: number;
   private tableAsync: AsyncSubject<string> = new AsyncSubject();
-  form: FormGroup;
+  form!: FormGroup;
   type: any[] = Object.values(SchemaType);
 
   constructor(
@@ -28,17 +28,18 @@ export class SchemaEditComponent implements OnInit {
     private swal: BitSwalService,
     private schemaService: SchemaService,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
-      name: this.fb.group(this.bit.i18nGroup({
-        validate: {
-          zh_cn: [Validators.required]
-        }
-      })),
+      name: this.fb.group(
+        this.bit.i18nGroup({
+          validate: {
+            zh_cn: [Validators.required]
+          }
+        })
+      ),
       table: [null, [Validators.required], [this.existsTable]],
       type: [null, [Validators.required]],
       description: [null],
@@ -74,12 +75,13 @@ export class SchemaEditComponent implements OnInit {
    */
   submit(data): void {
     Reflect.set(data, 'id', this.id);
-    this.schemaService.edit(data).pipe(
-      switchMap(res => this.swal.editAlert(res))
-    ).subscribe((status) => {
-      if (status) {
-        this.getData();
-      }
-    });
+    this.schemaService
+      .edit(data)
+      .pipe(switchMap(res => this.swal.editAlert(res)))
+      .subscribe(status => {
+        if (status) {
+          this.getData();
+        }
+      });
   }
 }

@@ -18,23 +18,23 @@ import * as packer from './language';
   styleUrls: ['./schema-option.component.scss']
 })
 export class SchemaOptionComponent implements OnInit {
-  private id: number;
+  private id!: number;
   data: any;
   type: any = SchemaType;
   columns: any[] = [];
   datatype: any = Datatype;
   datatypes: any[] = Object.values(this.datatype);
   column = false;
-  columnForm: FormGroup;
+  columnForm!: FormGroup;
   changed = false;
   editing = false;
-  editingColumn: string;
+  editingColumn!: string;
 
   terms: any[] = [];
   assoc: any[] = [];
 
-  @ViewChild('publishTpl') publishTpl: TemplateRef<any>;
-  publishRemark: string;
+  @ViewChild('publishTpl') publishTpl!: TemplateRef<any>;
+  publishRemark!: string;
 
   constructor(
     public bit: BitService,
@@ -44,8 +44,7 @@ export class SchemaOptionComponent implements OnInit {
     private fb: FormBuilder,
     private message: NzMessageService,
     private modal: NzModalService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -56,19 +55,22 @@ export class SchemaOptionComponent implements OnInit {
   }
 
   getData(): void {
-    this.schemaService.get(this.id).pipe(
-      switchMap((data: any) => {
-        this.data = data;
-        return this.columnService.originLists(data.table);
-      })
-    ).subscribe(data => {
-      this.columns = data.map(v => {
-        v.name = JSON.parse(v.name);
-        v.description = JSON.parse(v.description);
-        v.extra = JSON.parse(v.extra);
-        return v;
+    this.schemaService
+      .get(this.id)
+      .pipe(
+        switchMap((data: any) => {
+          this.data = data;
+          return this.columnService.originLists(data.table);
+        })
+      )
+      .subscribe(data => {
+        this.columns = data.map((v: any) => {
+          v.name = JSON.parse(v.name);
+          v.description = JSON.parse(v.description);
+          v.extra = JSON.parse(v.extra);
+          return v;
+        });
       });
-    });
   }
 
   getTerms(): void {
@@ -92,11 +94,13 @@ export class SchemaOptionComponent implements OnInit {
     switch (datatype) {
       case 'string':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['string', [Validators.required]],
@@ -119,11 +123,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'i18n':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['i18n', [Validators.required]],
@@ -144,11 +150,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'richtext':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['richtext', [Validators.required]],
@@ -167,11 +175,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'number':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['number', [Validators.required]],
@@ -198,11 +208,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'status':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['status', [Validators.required]],
@@ -223,11 +235,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'date':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['date', [Validators.required]],
@@ -248,11 +262,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'datetime':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['datetime', [Validators.required]],
@@ -273,11 +289,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'picture':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['picture', [Validators.required]],
@@ -300,11 +318,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'video':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['video', [Validators.required]],
@@ -327,11 +347,13 @@ export class SchemaOptionComponent implements OnInit {
         break;
       case 'enum':
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['enum', [Validators.required]],
@@ -362,11 +384,13 @@ export class SchemaOptionComponent implements OnInit {
       case 'assoc':
         this.getTerms();
         this.columnForm = this.fb.group({
-          name: this.fb.group(this.bit.i18nGroup({
-            validate: {
-              zh_cn: [Validators.required]
-            }
-          })),
+          name: this.fb.group(
+            this.bit.i18nGroup({
+              validate: {
+                zh_cn: [Validators.required]
+              }
+            })
+          ),
           column: [null, [Validators.required, this.existsColumn]],
           description: this.fb.group(this.bit.i18nGroup({})),
           datatype: ['assoc', [Validators.required]],
@@ -410,14 +434,18 @@ export class SchemaOptionComponent implements OnInit {
   };
 
   addEnum(): void {
-    this.formValues.push(this.fb.group({
-      label: this.fb.group(this.bit.i18nGroup({
-        validate: {
-          zh_cn: [Validators.required]
-        }
-      })),
-      value: [null, [Validators.required]]
-    }));
+    this.formValues.push(
+      this.fb.group({
+        label: this.fb.group(
+          this.bit.i18nGroup({
+            validate: {
+              zh_cn: [Validators.required]
+            }
+          })
+        ),
+        value: [null, [Validators.required]]
+      })
+    );
   }
 
   removeEnum(index: number): void {
@@ -432,11 +460,11 @@ export class SchemaOptionComponent implements OnInit {
 
   closeColumn(): void {
     this.column = false;
-    this.columnForm = undefined;
+    this.columnForm = undefined!;
   }
 
   submitColumn(data: any): void {
-    const dataset = {
+    const dataset: any = {
       column: data.column,
       datatype: data.datatype,
       name: data.name,
@@ -449,13 +477,10 @@ export class SchemaOptionComponent implements OnInit {
     Reflect.deleteProperty(data, 'description');
     Reflect.set(dataset, 'extra', data);
     if (!this.editing) {
-      this.columns = [
-        ...this.columns,
-        dataset
-      ];
+      this.columns = [...this.columns, dataset];
     } else {
       const value = this.columns.find(v => v.column === this.editingColumn);
-      Reflect.ownKeys(dataset).forEach((key) => {
+      Reflect.ownKeys(dataset).forEach(key => {
         Reflect.set(value, key, dataset[key]);
       });
     }
@@ -472,10 +497,7 @@ export class SchemaOptionComponent implements OnInit {
     this.columns.forEach((value, index) => {
       value.sort = index;
     });
-    this.columnService.update(
-      this.data.table,
-      this.columns
-    ).subscribe(res => {
+    this.columnService.update(this.data.table, this.columns).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.updateSuccess);
         this.changed = false;
@@ -492,10 +514,7 @@ export class SchemaOptionComponent implements OnInit {
       nzTitle: this.bit.l['publishConfirm'],
       nzContent: this.publishTpl,
       nzOnOk: () => {
-        this.schemaService.publish(
-          this.data.table,
-          this.publishRemark
-        ).subscribe(res => {
+        this.schemaService.publish(this.data.table, this.publishRemark).subscribe(res => {
           if (!res.error) {
             this.message.success(this.bit.l.publishSuccess);
           } else {

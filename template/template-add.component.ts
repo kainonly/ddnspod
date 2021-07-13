@@ -13,12 +13,16 @@ export class TemplateAddComponent extends TemplatePageComponent {
     // do nothing
   }
 
-  submit(data): void {
-    this.templateService.add(data).pipe(
-      switchMap(res => this.swal.addAlert(res, this.form, {
-        status: true
-      }))
-    ).subscribe(() => {
-    });
+  submit(data: any): void {
+    this.templateService
+      .add(data)
+      .pipe(
+        switchMap(res =>
+          this.swal.addAlert(res, this.form, {
+            status: true
+          })
+        )
+      )
+      .subscribe(() => {});
   }
 }
