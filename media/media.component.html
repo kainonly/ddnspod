@@ -7,11 +7,7 @@
     [nzMessage]="bit.l['uploadTip']"
     (nzOnClose)="fetchBoundY()"
   ></nz-alert>
-  <v-transport
-    *bitHeaderAction
-    [action]="transport"
-    (actionComplete)="transportComplete()"
-  ></v-transport>
+  <v-transport *bitHeaderAction [action]="transport" (actionComplete)="transportComplete()"></v-transport>
 </bit-header>
 
 <ng-template #title>
@@ -24,7 +20,7 @@
           [nzIndeterminate]="ds.lists.indeterminate"
           (ngModelChange)="ds.lists.checkedAll($event)"
         >
-          {{ bit.l["checked"] }}
+          {{ bit.l['checked'] }}
         </label>
       </button>
       <button
@@ -42,11 +38,11 @@
           <ul nz-menu>
             <li nz-menu-item (click)="openMoveModal(ds.lists.getChecked())">
               <i nz-icon nzType="swap"></i>
-              {{ bit.l["move"] }}
+              {{ bit.l['move'] }}
             </li>
             <li nz-menu-item (click)="openDeleteModal(ds.lists.getChecked())">
               <i nz-icon nzType="delete"></i>
-              {{ bit.l["deleteItem"] }}
+              {{ bit.l['deleteItem'] }}
             </li>
           </ul>
         </nz-dropdown-menu>
@@ -64,7 +60,7 @@
         [nz-tooltip]="bit.l['typePlaceholder']"
       >
         <nz-option nzCustomContent [nzValue]="''" [nzLabel]="bit.l['all']">
-          <span>{{ bit.l["all"] }}</span>
+          <span>{{ bit.l['all'] }}</span>
           <nz-badge
             *ngIf="typeCount.hasOwnProperty('total')"
             class="custom-badge"
@@ -74,7 +70,7 @@
           ></nz-badge>
         </nz-option>
         <nz-option nzCustomContent [nzValue]="0" [nzLabel]="bit.l['unknownType']">
-          <span>{{ bit.l["unknownType"] }}</span>
+          <span>{{ bit.l['unknownType'] }}</span>
           <nz-badge
             *ngIf="typeCount.hasOwnProperty('0')"
             class="custom-badge"
@@ -97,7 +93,7 @@
       <ng-template #renderTemplate>
         <button nz-button nzType="link" nzBlock (click)="openTypeDrawer()">
           <i nz-icon nzType="form"></i>
-          {{ bit.l["editType"] }}
+          {{ bit.l['editType'] }}
         </button>
       </ng-template>
     </ng-container>
@@ -112,30 +108,18 @@
         />
       </nz-input-group>
       <ng-template #nzAddOnAfter>
-        <button
-          nz-button
-          nzType="primary"
-          nzSearch
-          [bitSearchStart]="ds.lists"
-          (after)="ds.fetchData(true)"
-        >
+        <button nz-button nzType="primary" nzSearch [bitSearchStart]="ds.lists" (after)="ds.fetchData(true)">
           <i nz-icon nzType="search"></i>
         </button>
       </ng-template>
     </ng-container>
     <button *nzSpaceItem nz-button nzType="default" (click)="ds.fetchData(true)">
       <i nz-icon nzType="sync"></i>
-      {{ bit.l["refreshLists"] }}
+      {{ bit.l['refreshLists'] }}
     </button>
-    <button
-      *nzSpaceItem
-      nz-button
-      nzType="default"
-      [bitSearchClear]="ds.lists"
-      (after)="ds.fetchData(true)"
-    >
+    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="ds.lists" (after)="ds.fetchData(true)">
       <i nz-icon nzType="clear"></i>
-      {{ bit.l["clearSearch"] }}
+      {{ bit.l['clearSearch'] }}
     </button>
   </nz-space>
 </ng-template>
@@ -154,7 +138,7 @@
   <ng-template #typeTitle>
     <nz-space>
       <ng-container *nzSpaceItem>
-        {{ bit.l["editType"] }}
+        {{ bit.l['editType'] }}
       </ng-container>
       <nz-switch
         *nzSpaceItem
@@ -168,85 +152,75 @@
   <ng-container *nzDrawerContent>
     <nz-table #typeTable [nzSize]="'middle'" [nzData]="typeLists" [(nzPageIndex)]="typePageIndex">
       <thead>
-      <tr>
-        <th nzWidth="70%">{{ bit.l["typeName"] }}</th>
-        <th *ngIf="!typeSort">{{ bit.l["action"] }}</th>
-      </tr>
+        <tr>
+          <th nzWidth="70%">{{ bit.l['typeName'] }}</th>
+          <th *ngIf="!typeSort">{{ bit.l['action'] }}</th>
+        </tr>
       </thead>
       <tbody cdkDropList [cdkDropListDisabled]="!typeSort" (cdkDropListDropped)="drop($event)">
-      <tr *ngIf="!typeSort">
-        <td>
-          <input
-            nz-input
-            [(ngModel)]="typeName"
-            [placeholder]="bit.l['typeNamePlaceholder']"
-            (keyup.enter)="addTypeSubmit()"
-          />
-        </td>
-        <td>
-          <a (click)="addTypeSubmit()"><i nz-icon nzType="check"></i> {{ bit.l["submit"] }}</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a (click)="addTypeCancel()"><i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}</a>
-        </td>
-      </tr>
-      <tr
-        *ngFor="let data of typeTable.data; index as i"
-        [ngClass]="{ 'drag-cursor': typeSort }"
-        cdkDrag
-        (contextmenu)="openSortMenu($event, sortMenu)"
-      >
-        <ng-container *ngIf="editTypeCell(data); else normalCellTel">
+        <tr *ngIf="!typeSort">
           <td>
             <input
               nz-input
-              [(ngModel)]="data.editName"
+              [(ngModel)]="typeName"
               [placeholder]="bit.l['typeNamePlaceholder']"
-              (keyup.enter)="editTypeSubmit(data)"
+              (keyup.enter)="addTypeSubmit()"
             />
           </td>
           <td>
-            <a (click)="editTypeSubmit(data)">
-              <i nz-icon nzType="check"></i> {{ bit.l["submit"] }}
-            </a>
+            <a (click)="addTypeSubmit()"><i nz-icon nzType="check"></i> {{ bit.l['submit'] }}</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a (click)="editTypeCancel()">
-              <i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}
-            </a>
+            <a (click)="addTypeCancel()"><i nz-icon nzType="close"></i> {{ bit.l['cancel'] }}</a>
           </td>
-        </ng-container>
-        <ng-template #normalCellTel>
-          <td>
-            {{ data.name }}
-          </td>
-          <td *ngIf="!typeSort">
-            <a (click)="editType(data)"> <i nz-icon nzType="edit"></i> {{ bit.l["edit"] }} </a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a
-              nz-popconfirm
-              [nzPopconfirmTitle]="bit.l['deleteWarning']"
-              (nzOnConfirm)="editTypeDelete([data.id])"
-            >
-              <i nz-icon nzType="delete"></i> {{ bit.l["delete"] }}
-            </a>
-          </td>
-        </ng-template>
-        <nz-dropdown-menu #sortMenu>
-          <ul nz-menu>
-            <li nz-menu-item (click)="sortMove(i, 0)">
-              <i nz-icon nzType="vertical-align-top"></i> 排序置顶
-            </li>
-            <li nz-menu-item (click)="sortMove(i, i - typePageIndex * 10)">
-              <i nz-icon nzType="vertical-right"></i> 向前一页
-            </li>
-            <li nz-menu-item (click)="sortMove(i, i + typePageIndex * 10)">
-              <i nz-icon nzType="vertical-left"></i> 向后一页
-            </li>
-            <li nz-menu-item (click)="sortMove(i, typeLists.length - 1)">
-              <i nz-icon nzType="vertical-align-bottom"></i> 排序置底
-            </li>
-          </ul>
-        </nz-dropdown-menu>
-      </tr>
+        </tr>
+        <tr
+          *ngFor="let data of typeTable.data; index as i"
+          [ngClass]="{ 'drag-cursor': typeSort }"
+          cdkDrag
+          (contextmenu)="openSortMenu($event, sortMenu)"
+        >
+          <ng-container *ngIf="editTypeCell(data); else normalCellTel">
+            <td>
+              <input
+                nz-input
+                [(ngModel)]="data.editName"
+                [placeholder]="bit.l['typeNamePlaceholder']"
+                (keyup.enter)="editTypeSubmit(data)"
+              />
+            </td>
+            <td>
+              <a (click)="editTypeSubmit(data)"> <i nz-icon nzType="check"></i> {{ bit.l['submit'] }} </a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="editTypeCancel()"> <i nz-icon nzType="close"></i> {{ bit.l['cancel'] }} </a>
+            </td>
+          </ng-container>
+          <ng-template #normalCellTel>
+            <td>
+              {{ data.name }}
+            </td>
+            <td *ngIf="!typeSort">
+              <a (click)="editType(data)"> <i nz-icon nzType="edit"></i> {{ bit.l['edit'] }} </a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popconfirm [nzPopconfirmTitle]="bit.l['deleteWarning']" (nzOnConfirm)="editTypeDelete([data.id])">
+                <i nz-icon nzType="delete"></i> {{ bit.l['delete'] }}
+              </a>
+            </td>
+          </ng-template>
+          <nz-dropdown-menu #sortMenu>
+            <ul nz-menu>
+              <li nz-menu-item (click)="sortMove(i, 0)"> <i nz-icon nzType="vertical-align-top"></i> 排序置顶 </li>
+              <li nz-menu-item (click)="sortMove(i, i - typePageIndex * 10)">
+                <i nz-icon nzType="vertical-right"></i> 向前一页
+              </li>
+              <li nz-menu-item (click)="sortMove(i, i + typePageIndex * 10)">
+                <i nz-icon nzType="vertical-left"></i> 向后一页
+              </li>
+              <li nz-menu-item (click)="sortMove(i, typeLists.length - 1)">
+                <i nz-icon nzType="vertical-align-bottom"></i> 排序置底
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </tr>
       </tbody>
     </nz-table>
   </ng-container>
@@ -254,11 +228,7 @@
 
 <nz-ribbon [nzText]="bit.l['typeCount'] | Print: currentCount()">
   <nz-card [nzTitle]="title">
-    <cdk-virtual-scroll-viewport
-      class="infinite-container"
-      itemSize="231.5"
-      [ngStyle]="{ 'height.px': boundY }"
-    >
+    <cdk-virtual-scroll-viewport class="infinite-container" itemSize="231.5" [ngStyle]="{ 'height.px': boundY }">
       <nz-list *ngIf="ds" #listPanel nzGrid [nzLoading]="ds.updating">
         <nz-list-empty *ngIf="ds.empty()"></nz-list-empty>
         <div *cdkVirtualFor="let items of ds" nz-row [nzGutter]="8">
@@ -274,11 +244,7 @@
                 <ng-template #coverTpl>
                   <ng-container [ngSwitch]="key">
                     <ng-container *ngSwitchCase="'picture'">
-                      <div
-                        class="thumb"
-                        [style]="{ 'background-image': thumb(item.url) }"
-                        (click)="preview(item)"
-                      >
+                      <div class="thumb" [style]="{ 'background-image': thumb(item.url) }" (click)="preview(item)">
                         <div class="thumb-actions">
                           <i nz-icon nzType="search"></i>
                         </div>
@@ -303,7 +269,7 @@
                     <span nz-typography nzType="success">
                       <i nz-icon nzType="check"></i>
                     </span>
-                    {{ bit.l["copied"] }}
+                    {{ bit.l['copied'] }}
                   </ng-template>
                 </ng-template>
                 <ng-template #actionRename>
@@ -328,11 +294,11 @@
                     <ul nz-menu>
                       <li nz-menu-item (click)="openMoveModal([item])">
                         <i nz-icon nzType="swap"></i>
-                        {{ bit.l["move"] }}
+                        {{ bit.l['move'] }}
                       </li>
                       <li nz-menu-item (click)="openDeleteModal([item])">
                         <i nz-icon nzType="delete"></i>
-                        {{ bit.l["deleteItem"] }}
+                        {{ bit.l['deleteItem'] }}
                       </li>
                     </ul>
                   </nz-dropdown-menu>
@@ -401,11 +367,7 @@
           <span [innerHTML]="bit.l['moveLabel'] | Print: [moveData.length]"></span>
         </nz-form-label>
         <nz-form-control [nzErrorTip]="type.ref" [nzExtra]="typeExtra">
-          <nz-select
-            nzShowSearch
-            formControlName="type_id"
-            [nzPlaceHolder]="bit.l['movePlaceholder']"
-          >
+          <nz-select nzShowSearch formControlName="type_id" [nzPlaceHolder]="bit.l['movePlaceholder']">
             <nz-option [nzValue]="0" [nzLabel]="bit.l['unknownType']"></nz-option>
             <ng-container *ngFor="let x of typeLists">
               <nz-option [nzValue]="x.id" [nzLabel]="x.name"></nz-option>

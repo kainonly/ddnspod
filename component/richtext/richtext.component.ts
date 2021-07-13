@@ -1,4 +1,14 @@
-import { Component, forwardRef, Input, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { BitService } from 'ngx-bit';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -29,23 +39,22 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
    */
   refresh = false;
 
-  value: string;
-  protected onChange: (value: any) => void;
-  protected onTouched: () => void;
+  value!: string;
+  protected onChange!: (value: any) => void;
+  protected onTouched!: () => void;
 
-  @ViewChild('mediaTitle') mediaTitle: TemplateRef<any>;
-  mediaType: string;
-  mediaModal: NzModalRef<MediaComponent, any>;
+  @ViewChild('mediaTitle') mediaTitle!: TemplateRef<any>;
+  mediaType!: string;
+  mediaModal!: NzModalRef<MediaComponent, any>;
 
-  private localeChanged: Subscription;
+  private localeChanged!: Subscription;
 
   constructor(
     public bit: BitService,
     private zone: NgZone,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef
-  ) {
-  }
+  ) {}
 
   writeValue(value: any): void {
     this.value = value;
@@ -69,7 +78,7 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
       editor.ui.registry.addButton('NgPicture', {
         icon: 'image',
         tooltip: 'Insert Image',
-        onAction: (_) => {
+        onAction: () => {
           this.zone.run(() => {
             this.openMedia(editor, 'picture');
           });
@@ -78,7 +87,7 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
       editor.ui.registry.addButton('NgVideo', {
         icon: 'embed',
         tooltip: 'Insert Video',
-        onAction: (_) => {
+        onAction: () => {
           this.zone.run(() => {
             this.openMedia(editor, 'video');
           });
@@ -135,6 +144,9 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
           label: this.bit.l.insert,
           type: 'primary',
           onClick: componentInstance => {
+            if (!componentInstance) {
+              return;
+            }
             for (const item of componentInstance.ds.lists.getChecked()) {
               switch (type) {
                 case 'picture':

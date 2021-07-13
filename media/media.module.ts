@@ -7,24 +7,10 @@ import { MediaComponent } from './media.component';
 import { MediaService } from './media.service';
 import { MediaTypeService } from './media-type.service';
 
-
 @NgModule({
-  imports: [
-    ShareModule,
-    ScrollingModule,
-    DragDropModule,
-    FrameworkComponentModule
-  ],
-  declarations: [
-    MediaComponent
-  ],
-  exports: [
-    MediaComponent
-  ],
-  providers: [
-    MediaService,
-    MediaTypeService
-  ]
+  imports: [ShareModule, ScrollingModule, DragDropModule, FrameworkComponentModule],
+  declarations: [MediaComponent],
+  exports: [MediaComponent],
+  providers: [MediaService, MediaTypeService]
 })
-export class MediaModule {
-}
+export class MediaModule {}

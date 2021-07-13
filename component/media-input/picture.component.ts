@@ -16,12 +16,12 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class PictureComponent extends MediaInput {
-  @ViewChild('previewRef') previewRef: TemplateRef<any>;
-  previewUrl: string;
+  @ViewChild('previewRef') previewRef!: TemplateRef<any>;
+  previewUrl!: string;
 
   picturePreview = async (file: NzUploadFile) => {
     if (!file.url && !file.preview) {
-      file.preview = await this.mediaService.getBase64(file.originFileObj);
+      file.preview = await this.mediaService.getBase64(file.originFileObj!);
     }
     this.previewUrl = file.url || file.preview;
     this.modal.create({

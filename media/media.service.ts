@@ -5,15 +5,14 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MediaService {
-  private model: string;
+  private model!: string;
 
   constructor(
     private http: BitHttpService,
     private curd: BitCurdCommonService,
     private bit: BitService,
     private config: BitConfig
-  ) {
-  }
+  ) {}
 
   setModel(value: string): void {
     this.model = value;
@@ -43,9 +42,7 @@ export class MediaService {
   }
 
   count(): Observable<any> {
-    return this.http.req(this.model + '/count').pipe(
-      map(res => !res.error ? res.data : null)
-    );
+    return this.http.req(this.model + '/count').pipe(map(res => (!res.error ? res.data : null)));
   }
 
   thumb(path: string, withStatic = true): string {

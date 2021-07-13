@@ -21,10 +21,16 @@ export default {
   copied: ['已复制', 'Copied'],
   confirm: ['请求确认', 'Confirm'],
   rename: ['重命名', 'Rename'],
-  renameLabel: ['您将重命名 <b>$0</b> 此元素，您完全确定吗？', 'You will rename this element <b>$0</b>, are you absolutely sure?'],
+  renameLabel: [
+    '您将重命名 <b>$0</b> 此元素，您完全确定吗？',
+    'You will rename this element <b>$0</b>, are you absolutely sure?'
+  ],
   namePlaceholder: ['请填写新的元素名称', 'Please enter element name'],
   nameRequire: ['当前元素名称不能为空', 'Current element name cannot be empty'],
   moveLabel: ['您将移动以下 <b>$0</b> 个元素至', 'You will move the following <b>$0</b> elements to'],
   movePlaceholder: ['请选择移动分类名称', 'Please select type name to move'],
-  deleteLabel: ['您确定删除以下 <b>$0</b> 个元素吗?', 'Are you sure you want to delete the following <b>$0</b> elements?']
+  deleteLabel: [
+    '您确定删除以下 <b>$0</b> 个元素吗?',
+    'Are you sure you want to delete the following <b>$0</b> elements?'
+  ]
 };
