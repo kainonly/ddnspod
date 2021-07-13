@@ -20,7 +20,7 @@ import * as packer from './language';
 export class TemplatePageComponent implements OnInit {
   protected key!: string;
   protected id!: string;
-  back!: boolean;
+  back!: string;
 
   columns!: any[];
   protected columnMap = new Map();

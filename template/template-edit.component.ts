@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './template-page/template-page.component.html'
 })
 export class TemplateEditComponent extends TemplatePageComponent {
-  back = true;
+  back = 'true';
 
   protected getData(): void {
     this.templateService.get(this.id).subscribe(data => {

@@ -108,12 +108,12 @@
   <ng-container *ngIf="columnForm">
     <span
       *ngIf="!editing"
-      [innerHTML]="bit.l['addField'] | Print: [datatype[columnForm.get('datatype').value].label | object: bit.locale]"
+      [innerHTML]="bit.l['addField'] | Print: [datatype[columnForm.get('datatype')!.value].label | object: bit.locale]"
     >
     </span>
     <span
       *ngIf="editing"
-      [innerHTML]="bit.l['editField'] | Print: [datatype[columnForm.get('datatype').value].label | object: bit.locale]"
+      [innerHTML]="bit.l['editField'] | Print: [datatype[columnForm.get('datatype')!.value].label | object: bit.locale]"
     >
     </span>
   </ng-container>
@@ -188,7 +188,7 @@
           </nz-form-control>
         </ng-container>
       </nz-form-item>
-      <ng-container [ngSwitch]="columnForm.get('datatype').value">
+      <ng-container [ngSwitch]="columnForm.get('datatype')!.value">
         <ng-container *ngSwitchCase="'string'">
           <nz-form-item>
             <nz-form-label>
@@ -368,7 +368,7 @@
               {{ bit.l['default'] }}
             </nz-form-label>
             <nz-form-control>
-              <nz-select formControlName="default" [nzMode]="columnForm.get('multiple').value ? 'multiple' : 'default'">
+              <nz-select formControlName="default" [nzMode]="columnForm.get('multiple')!.value ?? 'default'">
                 <ng-container *ngFor="let item of formValues.value">
                   <nz-option [nzLabel]="item.label | object: bit.locale" [nzValue]="item.value"></nz-option>
                 </ng-container>
