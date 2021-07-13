@@ -1,10 +1,32 @@
 export const TinymceConfig: any = {
   height: 500,
   plugins: [
-    'paste', 'searchreplace', 'autolink', 'visualblocks', 'visualchars', 'fullscreen', 'help', 'quickbars',
-    'table', 'charmap', 'hr', 'pagebreak', 'nonbreaking', 'toc', 'insertdatetime', 'emoticons',
-    'advlist', 'lists', 'textpattern', 'noneditable', 'charmap', 'link', 'importcss',
-    'image', 'imagetools', 'media'
+    'paste',
+    'searchreplace',
+    'autolink',
+    'visualblocks',
+    'visualchars',
+    'fullscreen',
+    'help',
+    'quickbars',
+    'table',
+    'charmap',
+    'hr',
+    'pagebreak',
+    'nonbreaking',
+    'toc',
+    'insertdatetime',
+    'emoticons',
+    'advlist',
+    'lists',
+    'textpattern',
+    'noneditable',
+    'charmap',
+    'link',
+    'importcss',
+    'image',
+    'imagetools',
+    'media'
   ],
   menu: {
     file: { title: 'File', items: 'newdocument' },
@@ -12,11 +34,13 @@ export const TinymceConfig: any = {
     view: { title: 'View', items: 'visualaid visualchars visualblocks | fullscreen' },
     insert: {
       title: 'Insert',
-      items: 'image link media codesample inserttable | charmap emoticons hr | pagebreak nonbreaking toc | insertdatetime'
+      items:
+        'image link media codesample inserttable | charmap emoticons hr | pagebreak nonbreaking toc | insertdatetime'
     },
     format: {
       title: 'Format',
-      items: 'bold italic underline strikethrough superscript subscript codeformat | ' +
+      items:
+        'bold italic underline strikethrough superscript subscript codeformat | ' +
         'formats blockformats fontformats fontsizes align lineheight | forecolor backcolor | removeformat'
     },
     table: { title: 'Table', items: 'inserttable | cell row column | tableprops deletetable' },

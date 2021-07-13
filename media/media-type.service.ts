@@ -4,13 +4,9 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class MediaTypeService {
-  private model: string;
+  private model!: string;
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   setModel(value: string): void {
     this.model = value + '_type';

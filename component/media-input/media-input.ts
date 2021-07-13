@@ -19,13 +19,13 @@ export class MediaInput implements ControlValueAccessor, OnInit {
 
   fileList: NzUploadFile[] = [];
 
-  @ViewChild('mediaTitle') mediaTitle: TemplateRef<any>;
-  mediaModal: NzModalRef<MediaComponent, any>;
+  @ViewChild('mediaTitle') mediaTitle!: TemplateRef<any>;
+  mediaModal!: NzModalRef<MediaComponent, any>;
 
-  @ViewChild('sortRef') sortRef: TemplateRef<any>;
+  @ViewChild('sortRef') sortRef!: TemplateRef<any>;
 
-  protected onChange: (value: any[]) => void;
-  protected onTouched: () => void;
+  protected onChange!: (value: any[]) => void;
+  protected onTouched!: () => void;
 
   constructor(
     public bit: BitService,
@@ -35,8 +35,7 @@ export class MediaInput implements ControlValueAccessor, OnInit {
     protected viewContainerRef: ViewContainerRef,
     protected drawer: NzDrawerService,
     protected mediaService: MediaService
-  ) {
-  }
+  ) {}
 
   writeValue(files: any[]): void {
     if (!files) {
@@ -75,9 +74,9 @@ export class MediaInput implements ControlValueAccessor, OnInit {
   upload(info: NzUploadChangeParam): void {
     if (info.type === 'success') {
       Reflect.set(
-        this.fileList.find(v => v.uid === info.file.uid),
+        this.fileList.find(v => v.uid === info.file.uid)!,
         'filename',
-        info.file.originFileObj['key']
+        Reflect.get(info.file.originFileObj!, 'key')
       );
       this.updateValue();
       this.notification.success(this.bit.l.success, this.bit.l.uploadSuccess);
@@ -109,6 +108,9 @@ export class MediaInput implements ControlValueAccessor, OnInit {
           label: this.bit.l.selectSubmit,
           type: 'primary',
           disabled: contentComponentInstance => {
+            if (!contentComponentInstance) {
+              return false;
+            }
             if (!contentComponentInstance.ds) {
               return true;
             }
@@ -118,6 +120,9 @@ export class MediaInput implements ControlValueAccessor, OnInit {
             return contentComponentInstance.ds.lists.getChecked().length === 0;
           },
           onClick: componentInstance => {
+            if (!componentInstance) {
+              return;
+            }
             const files = componentInstance.ds.lists.getChecked().map(v => {
               return {
                 uid: uuidv4(),
