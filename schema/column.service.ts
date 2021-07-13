@@ -6,11 +6,7 @@ import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
 export class ColumnService {
   private model = 'column';
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   get(schema: any, column: any): Observable<any> {
     return this.curd.get(this.model, [

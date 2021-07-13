@@ -4,12 +4,9 @@ import { BitCurdCommonService, ListByPage } from 'ngx-bit';
 
 @Injectable()
 export class TemplateService {
-  private model: string;
+  private model!: string;
 
-  constructor(
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private curd: BitCurdCommonService) {}
 
   setModel(value: string): void {
     this.model = value;

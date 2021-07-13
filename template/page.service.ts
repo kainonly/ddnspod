@@ -6,16 +6,10 @@ import { BitCurdCommonService, BitHttpService } from 'ngx-bit';
 export class PageService {
   private model = 'page';
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService
-  ) {
-  }
+  constructor(private http: BitHttpService, private curd: BitCurdCommonService) {}
 
   get(key: any): Observable<any> {
-    return this.curd.get(this.model, [
-      { field: 'key', op: '=', value: key }
-    ]);
+    return this.curd.get(this.model, [{ field: 'key', op: '=', value: key }]);
   }
 
   update(data: any): Observable<any> {

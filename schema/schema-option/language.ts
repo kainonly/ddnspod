@@ -41,6 +41,9 @@ export default {
   assocName: ['关联名', 'Assoc Name'],
   publishSuccess: ['发布成功', 'Publish Success'],
   publishError: ['发布失败', 'Publish Failed'],
-  publishConfirm: ['发布确认，请确保当前模型已保存', 'Publish confirm, please make sure that the current schema has been saved'],
+  publishConfirm: [
+    '发布确认，请确保当前模型已保存',
+    'Publish confirm, please make sure that the current schema has been saved'
+  ],
   remarkPlaceholder: ['请输入模型发布内容', 'Please enter the content of the schema']
 };

@@ -14,7 +14,7 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './schema-add.component.html'
 })
 export class SchemaAddComponent implements OnInit {
-  form: FormGroup;
+  form!: FormGroup;
   type: any[] = Object.values(SchemaType);
 
   constructor(
@@ -23,17 +23,18 @@ export class SchemaAddComponent implements OnInit {
     private notification: NzNotificationService,
     private swal: BitSwalService,
     private schemaService: SchemaService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
     this.form = this.fb.group({
-      name: this.fb.group(this.bit.i18nGroup({
-        validate: {
-          zh_cn: [Validators.required]
-        }
-      })),
+      name: this.fb.group(
+        this.bit.i18nGroup({
+          validate: {
+            zh_cn: [Validators.required]
+          }
+        })
+      ),
       table: [null, [Validators.required], [this.existsTable]],
       type: [null, [Validators.required]],
       description: [null],
@@ -48,12 +49,16 @@ export class SchemaAddComponent implements OnInit {
   /**
    * 提交
    */
-  submit(data): void {
-    this.schemaService.add(data).pipe(
-      switchMap(res => this.swal.addAlert(res, this.form, {
-        status: true
-      }))
-    ).subscribe(() => {
-    });
+  submit(data: any): void {
+    this.schemaService
+      .add(data)
+      .pipe(
+        switchMap(res =>
+          this.swal.addAlert(res, this.form, {
+            status: true
+          })
+        )
+      )
+      .subscribe(() => {});
   }
 }

@@ -32,12 +32,7 @@
             <nz-form-label bitCol="label" [nzRequired]="data.extra.required">
               <span>
                 {{ data.name | object: bit.locale }}
-                <i
-                  nz-icon
-                  nz-tooltip
-                  [nzTooltipTitle]="bit.l['i18nTip']"
-                  nzType="translation"
-                ></i>
+                <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['i18nTip']" nzType="translation"></i>
               </span>
             </nz-form-label>
             <ng-container *ngFor="let i18n of bit.i18nContain">
@@ -65,12 +60,7 @@
             <nz-form-label bitCol="label" [nzRequired]="data.extra.required">
               <span>
                 {{ data.name | object: bit.locale }}
-                <i
-                  nz-icon
-                  nz-tooltip
-                  [nzTooltipTitle]="bit.l['i18nTip']"
-                  nzType="translation"
-                ></i>
+                <i nz-icon nz-tooltip [nzTooltipTitle]="bit.l['i18nTip']" nzType="translation"></i>
               </span>
             </nz-form-label>
             <ng-container *ngFor="let i18n of bit.i18nContain">
@@ -79,11 +69,7 @@
                 bitCol="control"
                 [nzExtra]="data.description | object: bit.locale"
               >
-                <v-richtext
-                  [nz-tooltip]="tooltip.ref"
-                  [formControlName]="i18n"
-                >
-                </v-richtext>
+                <v-richtext [nz-tooltip]="tooltip.ref" [formControlName]="i18n"> </v-richtext>
                 <bit-i18n-tooltip #tooltip [groupName]="data['column']"></bit-i18n-tooltip>
               </nz-form-control>
             </ng-container>
@@ -160,11 +146,7 @@
               {{ data.name | object: bit.locale }}
             </nz-form-label>
             <nz-form-control bitCol="control" [nzExtra]="data.description | object: bit.locale">
-              <v-picture
-                [formControlName]="data.column"
-                [limit]="data.extra.limit"
-                [allowSort]="data.extra.allow_sort"
-              >
+              <v-picture [formControlName]="data.column" [limit]="data.extra.limit" [allowSort]="data.extra.allow_sort">
               </v-picture>
             </nz-form-control>
           </nz-form-item>
@@ -175,11 +157,7 @@
               {{ data.name | object: bit.locale }}
             </nz-form-label>
             <nz-form-control bitCol="control" [nzExtra]="data.description | object: bit.locale">
-              <v-video
-                [formControlName]="data.column"
-                [limit]="data.extra.limit"
-                [allowSort]="data.extra.allow_sort"
-              >
+              <v-video [formControlName]="data.column" [limit]="data.extra.limit" [allowSort]="data.extra.allow_sort">
               </v-video>
             </nz-form-control>
           </nz-form-item>
@@ -190,15 +168,9 @@
               {{ data.name | object: bit.locale }}
             </nz-form-label>
             <nz-form-control bitCol="control">
-              <nz-select
-                [formControlName]="data.column"
-                [nzMode]="!data.extra.multiple ? 'default' : 'multiple'"
-              >
+              <nz-select [formControlName]="data.column" [nzMode]="!data.extra.multiple ? 'default' : 'multiple'">
                 <ng-container *ngFor="let item of data.extra.values">
-                  <nz-option
-                    [nzValue]="item.value"
-                    [nzLabel]="item.label | object: bit.locale"
-                  ></nz-option>
+                  <nz-option [nzValue]="item.value" [nzLabel]="item.label | object: bit.locale"></nz-option>
                 </ng-container>
               </nz-select>
             </nz-form-control>
@@ -210,10 +182,7 @@
               {{ data.name | object: bit.locale }}
             </nz-form-label>
             <nz-form-control bitCol="control">
-              <nz-select
-                [formControlName]="data.column"
-                [nzMode]="!data.extra.multiple ? 'default' : 'multiple'"
-              >
+              <nz-select [formControlName]="data.column" [nzMode]="!data.extra.multiple ? 'default' : 'multiple'">
                 <ng-container *ngIf="assoc.hasOwnProperty(data.column)">
                   <ng-container *ngFor="let item of assoc[data.column].items">
                     <ng-container *ngIf="assoc[data.column].datatype === 'i18n'; else notI18n">
@@ -241,10 +210,10 @@
       <nz-form-control bitCol="submit">
         <nz-space>
           <button *nzSpaceItem nz-button nzType="primary" [disabled]="!form.valid">
-            <i nz-icon nzType="check"></i> {{ bit.l["submit"] }}
+            <i nz-icon nzType="check"></i> {{ bit.l['submit'] }}
           </button>
           <button *nzSpaceItem nz-button type="button" bitBack>
-            <i nz-icon nzType="close"></i> {{ bit.l["cancel"] }}
+            <i nz-icon nzType="close"></i> {{ bit.l['cancel'] }}
           </button>
         </nz-space>
       </nz-form-control>

@@ -10,10 +10,7 @@ import { SchemaOptionComponent } from './schema-option/schema-option.component';
 import { SchemaHistoryComponent } from './schema-history/schema-history.component';
 
 @NgModule({
-  imports: [
-    ShareModule,
-    DragDropModule
-  ],
+  imports: [ShareModule, DragDropModule],
   declarations: [
     SchemaIndexComponent,
     SchemaAddComponent,
@@ -28,10 +25,6 @@ import { SchemaHistoryComponent } from './schema-history/schema-history.componen
     SchemaOptionComponent,
     SchemaHistoryComponent
   ],
-  providers: [
-    SchemaService,
-    ColumnService
-  ]
+  providers: [SchemaService, ColumnService]
 })
-export class SchemaModule {
-}
+export class SchemaModule {}

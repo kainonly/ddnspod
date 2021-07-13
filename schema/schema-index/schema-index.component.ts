@@ -11,7 +11,7 @@ import { BitSwalService } from 'ngx-bit/swal';
   templateUrl: './schema-index.component.html'
 })
 export class SchemaIndexComponent implements OnInit {
-  lists: ListByPage;
+  lists!: ListByPage;
   type: any[] = Object.values(SchemaType);
 
   constructor(
@@ -19,8 +19,7 @@ export class SchemaIndexComponent implements OnInit {
     private swal: BitSwalService,
     private message: NzMessageService,
     public schemaService: SchemaService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
@@ -50,9 +49,7 @@ export class SchemaIndexComponent implements OnInit {
    * 删除单操作
    */
   deleteData(id: any[]): void {
-    this.swal.deleteAlert(
-      this.schemaService.delete(id)
-    ).subscribe(res => {
+    this.swal.deleteAlert(this.schemaService.delete(id)).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.deleteSuccess);
         this.getLists(true);

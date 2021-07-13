@@ -6,14 +6,13 @@ import { SchemaService } from '../schema.service';
 import { SchemaType } from '../schema-type';
 import * as packer from './language';
 
-
 @Component({
   selector: 'v-schema-history',
   templateUrl: './schema-history.component.html',
   styleUrls: ['./schema-history.component.scss']
 })
 export class SchemaHistoryComponent implements OnInit {
-  private id: number;
+  private id!: number;
   data: any;
   lists: any[] = [];
   table: any;
@@ -21,12 +20,7 @@ export class SchemaHistoryComponent implements OnInit {
   active = 'main';
   expands = new Set();
 
-  constructor(
-    public bit: BitService,
-    private route: ActivatedRoute,
-    private schemaService: SchemaService
-  ) {
-  }
+  constructor(public bit: BitService, private route: ActivatedRoute, private schemaService: SchemaService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);
