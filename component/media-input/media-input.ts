@@ -86,6 +86,11 @@ export class MediaInput implements ControlValueAccessor, OnInit {
     }
   }
 
+  url = (file: NzUploadFile): string => {
+    const key = Reflect.get(file.originFileObj!, 'key');
+    return file.originFileObj ? this.bit.static + key : file.url!;
+  };
+
   /**
    * 上传按钮禁用
    */
