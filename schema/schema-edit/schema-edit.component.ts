@@ -73,7 +73,7 @@ export class SchemaEditComponent implements OnInit {
   /**
    * 提交
    */
-  submit(data): void {
+  submit(data: any): void {
     Reflect.set(data, 'id', this.id);
     this.schemaService
       .edit(data)

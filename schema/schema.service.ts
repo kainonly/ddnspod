@@ -41,25 +41,25 @@ export class SchemaService {
   }
 
   publish(table: any, remark: string): Observable<any> {
-    return this.http.req(this.model + '/publish', {
+    return this.http.req(`${this.model}/publish`, {
       table,
       remark
     });
   }
 
   history(table: any): Observable<any> {
-    return this.http.req(this.model + '/history', { table }).pipe(map(res => (!res.error ? res.data : null)));
+    return this.http.req(`${this.model}/history`, { table }).pipe(map(res => (!res.error ? res.data : null)));
   }
 
   table(table: any): Observable<any> {
-    return this.http.req(this.model + '/table', { table }).pipe(map(res => (!res.error ? res.data : null)));
+    return this.http.req(`${this.model}/table`, { table }).pipe(map(res => (!res.error ? res.data : null)));
   }
 
-  validedTable(table: string, edit: Observable<string> = of(null)): Observable<any> {
+  validedTable(table: string, edit: Observable<any> = of(null)): Observable<any> {
     return edit.pipe(
       switchMap(editKey => {
         if (table !== editKey) {
-          return this.http.req(this.model + '/validedTable', {
+          return this.http.req(`${this.model}/validedTable`, {
             table
           });
         }
