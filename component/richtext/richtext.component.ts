@@ -9,7 +9,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { BitService } from 'ngx-bit';
+import { Bit } from 'ngx-bit';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MediaComponent } from '@vanx/cms/media';
@@ -50,7 +50,7 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
   private localeChanged!: Subscription;
 
   constructor(
-    public bit: BitService,
+    public bit: Bit,
     private zone: NgZone,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef
