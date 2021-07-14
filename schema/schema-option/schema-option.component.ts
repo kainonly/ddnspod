@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { ColumnService } from '../column.service';
 import { SchemaService } from '../schema.service';
 import { ActivatedRoute } from '@angular/router';
@@ -37,7 +37,7 @@ export class SchemaOptionComponent implements OnInit {
   publishRemark!: string;
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     private schemaService: SchemaService,
     public columnService: ColumnService,
     private route: ActivatedRoute,

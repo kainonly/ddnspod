@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { NzTimelineItemColor } from 'ng-zorro-antd/timeline';
 import { ActivatedRoute } from '@angular/router';
 import { SchemaService } from '../schema.service';
@@ -20,7 +20,7 @@ export class SchemaHistoryComponent implements OnInit {
   active = 'main';
   expands = new Set();
 
-  constructor(public bit: Bit, private route: ActivatedRoute, private schemaService: SchemaService) {}
+  constructor(public bit: BitService, private route: ActivatedRoute, private schemaService: SchemaService) {}
 
   ngOnInit(): void {
     this.bit.registerLocales(packer);

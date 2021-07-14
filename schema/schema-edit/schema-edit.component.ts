@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { switchMap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class SchemaEditComponent implements OnInit {
   type: any[] = Object.values(SchemaType);
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     private fb: FormBuilder,
     private notification: NzNotificationService,
     private swal: BitSwalService,

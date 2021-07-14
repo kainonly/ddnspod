@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Bit, ListByPage } from 'ngx-bit';
+import { BitService, ListByPage } from 'ngx-bit';
 import { SchemaService } from '../schema.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SchemaType } from '../schema-type';
@@ -15,7 +15,7 @@ export class SchemaIndexComponent implements OnInit {
   type: any[] = Object.values(SchemaType);
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     private swal: BitSwalService,
     private message: NzMessageService,
     public schemaService: SchemaService

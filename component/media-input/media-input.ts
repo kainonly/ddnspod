@@ -3,7 +3,7 @@ import { Directive, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } fr
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { MediaService, MediaComponent } from '@vanx/cms/media';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { Bit } from 'ngx-bit';
+import { BitService } from 'ngx-bit';
 import { v4 as uuidv4 } from 'uuid';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
@@ -28,7 +28,7 @@ export class MediaInput implements ControlValueAccessor, OnInit {
   protected onTouched!: () => void;
 
   constructor(
-    public bit: Bit,
+    public bit: BitService,
     protected notification: NzNotificationService,
     protected modal: NzModalService,
     protected message: NzMessageService,
