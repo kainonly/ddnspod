@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Bit, ListByPage, SearchOption } from 'ngx-bit';
+import { BitService, ListByPage, SearchOption } from 'ngx-bit';
 import { ColumnService } from '@vanx/cms/schema';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class TemplateIndexComponent implements OnInit {
 
   constructor(
     private swal: BitSwalService,
-    public bit: Bit,
+    public bit: BitService,
     private message: NzMessageService,
     private storage: StorageMap,
     private route: ActivatedRoute,

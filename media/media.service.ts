@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BitConfig, BitCurdCommonService, BitHttpService, Bit } from 'ngx-bit';
+import { BitConfig, BitCurdCommonService, BitHttpService, BitService } from 'ngx-bit';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ export class MediaService {
   constructor(
     private http: BitHttpService,
     private curd: BitCurdCommonService,
-    private bit: Bit,
+    private bit: BitService,
     private config: BitOptions
   ) {}
 
