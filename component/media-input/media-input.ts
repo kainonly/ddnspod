@@ -1,15 +1,16 @@
-/* tslint:disable:directive-class-suffix */
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Directive, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { ControlValueAccessor } from '@angular/forms';
+
 import { MediaService, MediaComponent } from '@vanx/cms/media';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { BitService } from 'ngx-bit';
 import { v4 as uuidv4 } from 'uuid';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { NzDrawerService } from 'ng-zorro-antd/drawer';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { ControlValueAccessor } from '@angular/forms';
+
 import * as packer from './language';
 
 @Directive()
@@ -47,7 +48,7 @@ export class MediaInput implements ControlValueAccessor, OnInit {
         status: 'done',
         filename: v,
         thumbUrl: this.mediaService.thumb(v),
-        url: this.bit.static + v
+        url: this.bit.assets + v
       } as NzUploadFile;
     });
   }
@@ -88,7 +89,7 @@ export class MediaInput implements ControlValueAccessor, OnInit {
 
   url = (file: NzUploadFile): string => {
     const key = Reflect.get(file.originFileObj!, 'key');
-    return file.originFileObj ? this.bit.static + key : file.url!;
+    return file.originFileObj ? this.bit.assets + key : file.url!;
   };
 
   /**
@@ -133,8 +134,8 @@ export class MediaInput implements ControlValueAccessor, OnInit {
                 uid: uuidv4(),
                 status: 'done',
                 filename: v.url,
-                thumbUrl: this.mediaService.thumb(v.url),
-                url: this.bit.static + v.url
+                thumbUrl: this.mediaService.thumb(v.url as string),
+                url: this.bit.assets + v.url
               } as NzUploadFile;
             });
             const limit = this.limit;
@@ -149,8 +150,8 @@ export class MediaInput implements ControlValueAccessor, OnInit {
                   uid: uuidv4(),
                   status: 'done',
                   filename: v.url,
-                  thumbUrl: this.mediaService.thumb(v.url),
-                  url: this.bit.static + v.url
+                  thumbUrl: this.mediaService.thumb(v.url as string),
+                  url: this.bit.assets + v.url
                 } as NzUploadFile;
               })
             ];

@@ -9,11 +9,13 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { BitService } from 'ngx-bit';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MediaComponent } from '@vanx/cms/media';
 import { Subscription } from 'rxjs';
+
+import { MediaComponent } from '@vanx/cms/media';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { BitService } from 'ngx-bit';
+
 import * as packer from './language';
 
 @Component({
@@ -94,7 +96,7 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
         }
       });
     };
-    this.localeChanged = this.bit.localeChanged.subscribe(() => {
+    this.localeChanged = this.bit.localeChanged!.subscribe(() => {
       this.refresh = true;
       this.setTinymceLang(this.bit.locale);
       setTimeout(() => {
@@ -151,12 +153,12 @@ export class RichtextComponent implements ControlValueAccessor, OnInit, OnDestro
               switch (type) {
                 case 'picture':
                   editor.insertContent(`
-                    <img src="${this.bit.static + item.url}" alt="${item.name}">
+                    <img src='${this.bit.assets + item.url}' alt='${item.name}'>
                   `);
                   break;
                 case 'video':
                   editor.insertContent(`
-                    <video class="editor-video" src="${this.bit.static + item.url}" controls="controls"></video>
+                    <video class='editor-video' src='${this.bit.assets + item.url}' controls='controls'></video>
                   `);
                   break;
               }
