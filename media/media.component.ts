@@ -21,7 +21,7 @@ import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dro
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { SystemService } from '@vanx/framework';
+import { LayoutService } from '@vanx/framework';
 import { MediaService } from './media.service';
 import { MediaTypeService } from './media-type.service';
 import { MediaDataSource } from './media.data-source';
@@ -69,7 +69,7 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   constructor(
     public config: BitOptions,
     public bit: BitService,
-    public system: SystemService,
+    public system: LayoutService,
     private mediaService: MediaService,
     private mediaTypeService: MediaTypeService,
     private clipboard: Clipboard,
