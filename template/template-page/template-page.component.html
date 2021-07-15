@@ -11,24 +11,13 @@
             <nz-form-label bitCol="label" [nzRequired]="data.extra.required">
               {{ data.name | object: bit.locale }}
             </nz-form-label>
-            <nz-form-control
-              bitCol="control"
-              nzHasFeedback
-              [nzErrorTip]="stringType.ref"
-              [nzExtra]="data.description | object: bit.locale"
-            >
+            <nz-form-control bitCol="control" nzHasFeedback [nzExtra]="data.description | object: bit.locale">
               <input nz-input [formControlName]="data.column" />
-              <bit-error-tip
-                #stringType
-                [hasError]="{
-                  required: (data.name | object: bit.locale) + bit.l['required']
-                }"
-              ></bit-error-tip>
             </nz-form-control>
           </nz-form-item>
         </ng-container>
         <ng-container *ngSwitchCase="'i18n'">
-          <nz-form-item [formGroupName]="data.column" bitI18nUpdate>
+          <nz-form-item [formGroupName]="data.column">
             <nz-form-label bitCol="label" [nzRequired]="data.extra.required">
               <span>
                 {{ data.name | object: bit.locale }}
@@ -40,23 +29,15 @@
                 *ngIf="bit.equalI18n(i18n)"
                 bitCol="control"
                 nzHasFeedback
-                [nzErrorTip]="i18nType.ref"
                 [nzExtra]="data.description | object: bit.locale"
               >
-                <input nz-input [nz-tooltip]="tooltip.ref" [formControlName]="i18n" />
-                <bit-i18n-tooltip #tooltip [groupName]="data['column']"></bit-i18n-tooltip>
-                <bit-error-tip
-                  #i18nType
-                  [hasError]="{
-                    required: (data.name | object: bit.locale) + bit.l['required']
-                  }"
-                ></bit-error-tip>
+                <input nz-input [formControlName]="i18n" />
               </nz-form-control>
             </ng-container>
           </nz-form-item>
         </ng-container>
         <ng-container *ngSwitchCase="'richtext'">
-          <nz-form-item [formGroupName]="data.column" bitI18nUpdate>
+          <nz-form-item [formGroupName]="data.column">
             <nz-form-label bitCol="label" [nzRequired]="data.extra.required">
               <span>
                 {{ data.name | object: bit.locale }}
@@ -69,8 +50,7 @@
                 bitCol="control"
                 [nzExtra]="data.description | object: bit.locale"
               >
-                <v-richtext [nz-tooltip]="tooltip.ref" [formControlName]="i18n"> </v-richtext>
-                <bit-i18n-tooltip #tooltip [groupName]="data['column']"></bit-i18n-tooltip>
+                <v-richtext [formControlName]="i18n"></v-richtext>
               </nz-form-control>
             </ng-container>
           </nz-form-item>
@@ -80,23 +60,13 @@
             <nz-form-label bitCol="label" [nzRequired]="data.extra.required">
               {{ data.name | object: bit.locale }}
             </nz-form-label>
-            <nz-form-control
-              bitCol="control"
-              [nzErrorTip]="numberType.ref"
-              [nzExtra]="data.description | object: bit.locale"
-            >
+            <nz-form-control bitCol="control" [nzExtra]="data.description | object: bit.locale">
               <nz-input-number
                 [formControlName]="data.column"
                 [nzMin]="data.extra.min"
                 [nzMax]="data.extra.max ? data.extra.max : undefined"
                 [nzStep]="1"
               ></nz-input-number>
-              <bit-error-tip
-                #numberType
-                [hasError]="{
-                  required: (data.name | object: bit.locale) + bit.l['required']
-                }"
-              ></bit-error-tip>
             </nz-form-control>
           </nz-form-item>
         </ng-container>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { TemplatePageComponent } from './template-page/template-page.component';
 import { switchMap } from 'rxjs/operators';
+
+import { TemplatePageComponent } from './template-page/template-page.component';
 
 @Component({
   selector: 'v-template-edit',
@@ -10,16 +11,16 @@ export class TemplateEditComponent extends TemplatePageComponent {
   back = 'true';
 
   protected getData(): void {
-    this.templateService.get(this.id).subscribe(data => {
+    this.templateService.api.get(this.id).subscribe((data: any) => {
       this.form.patchValue(data);
     });
   }
 
   submit(data: any): void {
     Reflect.set(data, 'id', this.id);
-    this.templateService
+    this.templateService.api
       .edit(data)
-      .pipe(switchMap(res => this.swal.editAlert(res)))
+      .pipe(switchMap((v: any) => this.swal.editAlert(v)))
       .subscribe(status => {
         if (status) {
           this.getData();

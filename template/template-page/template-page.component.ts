@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BitService } from 'ngx-bit';
-import { ColumnService } from '@vanx/cms/schema';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+
+import { ColumnService } from '@vanx/cms/schema';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { BitService } from 'ngx-bit';
 import { BitSwalService } from 'ngx-bit/swal';
-import { TemplateService } from '../template.service';
+
 import { PageService } from '../page.service';
+import { TemplateService } from '../template.service';
 import * as packer from './language';
 
 @Component({
@@ -119,9 +121,9 @@ export class TemplatePageComponent implements OnInit {
       value: {},
       validate: {}
     };
-    options.value[this.bit.i18n] = data.extra.default;
+    options.value[this.bit.i18n!] = data.extra.default;
     if (data.extra.required) {
-      options.validate[this.bit.i18n] = [Validators.required];
+      options.validate[this.bit.i18n!] = [Validators.required];
     }
     return this.fb.group(this.bit.i18nGroup(options));
   }
@@ -132,7 +134,7 @@ export class TemplatePageComponent implements OnInit {
   private getAssoc(schema: string, column: string, assoc: string): void {
     const value: Record<string, any> = {};
     this.templateService
-      .assoc(assoc)
+      .assoc()
       .pipe(
         switchMap(data => {
           value['items'] = data;

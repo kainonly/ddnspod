@@ -14,11 +14,11 @@
             [bitSearchStart]="lists"
             [placeholder]="columnsMap.get(key).name | object: bit.locale"
             [(ngModel)]="lists.search[key].value"
-            (after)="getLists(true)"
+            (bitAfter)="getLists(true)"
           />
         </nz-input-group>
         <ng-template #nzAddOnAfter>
-          <button nz-button nzType="primary" nzSearch [bitSearchStart]="lists" (after)="getLists(true)">
+          <button nz-button nzType="primary" nzSearch [bitSearchStart]="lists" (bitAfter)="getLists(true)">
             <i nz-icon nzType="search"></i>
           </button>
         </ng-template>
@@ -27,7 +27,7 @@
     <button *nzSpaceItem nz-button nzType="default" (click)="getLists(true)">
       <i nz-icon nzType="sync"></i> {{ bit.l['refreshLists'] }}
     </button>
-    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="lists" (after)="getLists(true)">
+    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="lists" (bitAfter)="getLists(true)">
       <i nz-icon nzType="clear"></i> {{ bit.l['clearSearch'] }}
     </button>
   </nz-space>
@@ -97,9 +97,9 @@
               <ng-container *ngSwitchCase="'i18n'">
                 {{ data[x.column] | object: bit.locale }}
               </ng-container>
-              <ng-container *ngSwitchCase="'richtext'"> 查看详情 </ng-container>
-              <ng-container *ngSwitchCase="'picture'"> </ng-container>
-              <ng-container *ngSwitchCase="'video'"> </ng-container>
+              <ng-container *ngSwitchCase="'richtext'"> 查看详情</ng-container>
+              <ng-container *ngSwitchCase="'picture'"></ng-container>
+              <ng-container *ngSwitchCase="'video'"></ng-container>
               <ng-container *ngSwitchDefault>
                 {{ data[x.column] }}
               </ng-container>

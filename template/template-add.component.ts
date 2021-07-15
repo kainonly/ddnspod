@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { TemplatePageComponent } from './template-page/template-page.component';
 import { switchMap } from 'rxjs/operators';
+
+import { TemplatePageComponent } from './template-page/template-page.component';
 
 @Component({
   selector: 'v-template-add',
@@ -14,11 +15,11 @@ export class TemplateAddComponent extends TemplatePageComponent {
   }
 
   submit(data: any): void {
-    this.templateService
+    this.templateService.api
       .add(data)
       .pipe(
-        switchMap(res =>
-          this.swal.addAlert(res, this.form, {
+        switchMap((v: any) =>
+          this.swal.addAlert(v, this.form, {
             status: true
           })
         )

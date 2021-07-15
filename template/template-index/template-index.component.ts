@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { StorageMap } from '@ngx-pwa/local-storage';
+import { ColumnService } from '@vanx/cms/schema';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { BitService, ListByPage, SearchOption } from 'ngx-bit';
-import { ColumnService } from '@vanx/cms/schema';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { BitSwalService } from 'ngx-bit/swal';
+
 import { TemplateService } from '../template.service';
 import * as packer from './language';
 
@@ -40,7 +43,7 @@ export class TemplateIndexComponent implements OnInit {
           this.columnsMap = new Map<string, any>();
           this.lists = undefined!;
           this.search = [];
-          return this.storage.get('template:' + this.key);
+          return this.storage.get(`template:${this.key}`);
         }),
         switchMap((search: any) => {
           if (search) {
@@ -84,7 +87,7 @@ export class TemplateIndexComponent implements OnInit {
       id: this.key,
       query: this.getQueryFromSearch()
     });
-    this.lists.ready.pipe(switchMap(() => this.storage.set('template:' + this.key, this.search))).subscribe(() => {
+    this.lists.ready.pipe(switchMap(() => this.storage.set(`template:${this.key}`, this.search))).subscribe(() => {
       this.getLists();
     });
   }
@@ -109,7 +112,7 @@ export class TemplateIndexComponent implements OnInit {
    * 获取列表数据
    */
   getLists(refresh = false, event?: any): void {
-    this.templateService.lists(this.lists, refresh, event !== undefined).subscribe(data => {
+    this.templateService.api.lists(this.lists, refresh, event !== undefined).subscribe((data: any) => {
       this.lists.setData(data);
     });
   }
@@ -118,7 +121,7 @@ export class TemplateIndexComponent implements OnInit {
    * 删除单操作
    */
   deleteData(id: any[]): void {
-    this.swal.deleteAlert(this.templateService.delete(id)).subscribe(res => {
+    this.swal.deleteAlert(this.templateService.api.delete(id) as Observable<any>).subscribe(res => {
       if (!res.error) {
         this.message.success(this.bit.l.deleteSuccess);
         this.getLists(true);
