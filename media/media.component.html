@@ -55,7 +55,7 @@
         nzShowSearch
         [(ngModel)]="ds.lists.search['type_id'].value"
         [bitSearchChange]="ds.lists"
-        (after)="ds.fetchData(true)"
+        (bitAfter)="ds.fetchData(true)"
         [nzDropdownRender]="renderTemplate"
         [nz-tooltip]="bit.l['typePlaceholder']"
       >
@@ -104,11 +104,11 @@
           [bitSearchStart]="ds.lists"
           [placeholder]="bit.l['search']"
           [(ngModel)]="ds.lists.search['name'].value"
-          (after)="ds.fetchData(true)"
+          (bitAfter)="ds.fetchData(true)"
         />
       </nz-input-group>
       <ng-template #nzAddOnAfter>
-        <button nz-button nzType="primary" nzSearch [bitSearchStart]="ds.lists" (after)="ds.fetchData(true)">
+        <button nz-button nzType="primary" nzSearch [bitSearchStart]="ds.lists" (bitAfter)="ds.fetchData(true)">
           <i nz-icon nzType="search"></i>
         </button>
       </ng-template>
@@ -117,7 +117,7 @@
       <i nz-icon nzType="sync"></i>
       {{ bit.l['refreshLists'] }}
     </button>
-    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="ds.lists" (after)="ds.fetchData(true)">
+    <button *nzSpaceItem nz-button nzType="default" [bitSearchClear]="ds.lists" (bitAfter)="ds.fetchData(true)">
       <i nz-icon nzType="clear"></i>
       {{ bit.l['clearSearch'] }}
     </button>
@@ -208,7 +208,7 @@
           </ng-template>
           <nz-dropdown-menu #sortMenu>
             <ul nz-menu>
-              <li nz-menu-item (click)="sortMove(i, 0)"> <i nz-icon nzType="vertical-align-top"></i> 排序置顶 </li>
+              <li nz-menu-item (click)="sortMove(i, 0)"><i nz-icon nzType="vertical-align-top"></i> 排序置顶</li>
               <li nz-menu-item (click)="sortMove(i, i - typePageIndex * 10)">
                 <i nz-icon nzType="vertical-right"></i> 向前一页
               </li>
@@ -252,7 +252,7 @@
                     </ng-container>
                     <ng-container *ngSwitchCase="'video'">
                       <div class="video">
-                        <video [src]="bit.static + item.url" controls="controls"></video>
+                        <video [src]="bit.assets + item.url" controls="controls"></video>
                       </div>
                     </ng-container>
                   </ng-container>
@@ -261,7 +261,7 @@
                   <i
                     nz-icon
                     nzType="link"
-                    [nz-tooltip]="item.copied ? copyTip : bit.static + item.url"
+                    [nz-tooltip]="item.copied ? copyTip : bit.assets + item.url"
                     [nzTooltipMouseEnterDelay]="0.2"
                     (click)="copy(item)"
                   ></i>
@@ -339,14 +339,8 @@
         <nz-form-label nzRequired>
           <span [innerHTML]="bit.l['renameLabel'] | Print: [renameData.name]"></span>
         </nz-form-label>
-        <nz-form-control [nzErrorTip]="name.ref">
+        <nz-form-control>
           <input formControlName="name" nz-input [placeholder]="bit.l['namePlaceholder']" />
-          <bit-error-tip
-            #name
-            [hasError]="{
-              required: bit.l['nameRequire']
-            }"
-          ></bit-error-tip>
         </nz-form-control>
       </nz-form-item>
     </form>
@@ -364,21 +358,15 @@
     <form *ngIf="moveData" nz-form nzLayout="vertical" [formGroup]="moveForm">
       <nz-form-item>
         <nz-form-label nzRequired>
-          <span [innerHTML]="bit.l['moveLabel'] | Print: [moveData.length]"></span>
+          <span [innerHTML]="bit.l['moveLabel'] | Print: [moveData.length.toString()]"></span>
         </nz-form-label>
-        <nz-form-control [nzErrorTip]="type.ref" [nzExtra]="typeExtra">
+        <nz-form-control [nzExtra]="typeExtra">
           <nz-select nzShowSearch formControlName="type_id" [nzPlaceHolder]="bit.l['movePlaceholder']">
             <nz-option [nzValue]="0" [nzLabel]="bit.l['unknownType']"></nz-option>
             <ng-container *ngFor="let x of typeLists">
               <nz-option [nzValue]="x.id" [nzLabel]="x.name"></nz-option>
             </ng-container>
           </nz-select>
-          <bit-error-tip
-            #type
-            [hasError]="{
-              required: bit.l['typeRequire']
-            }"
-          ></bit-error-tip>
         </nz-form-control>
         <ng-template #typeExtra>
           <nz-list style="margin-top: 0.5em" nzSize="small">
@@ -400,7 +388,7 @@
 >
   <ng-container *nzModalContent>
     <ng-container *ngIf="deleteData">
-      <p [innerHTML]="bit.l['deleteLabel'] | Print: [deleteData.length]"></p>
+      <p [innerHTML]="bit.l['deleteLabel'] | Print: [deleteData.length.toString()]"></p>
       <nz-list nzSize="small">
         <nz-list-item *ngFor="let item of deleteData">- {{ item.name }}</nz-list-item>
       </nz-list>

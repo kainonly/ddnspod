@@ -1,7 +1,9 @@
 import { Component, forwardRef } from '@angular/core';
-import { MediaInput } from './media-input';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+
+import { MediaInput } from './media-input';
 
 @Component({
   selector: 'v-video',

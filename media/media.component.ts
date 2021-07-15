@@ -1,3 +1,5 @@
+import { Clipboard } from '@angular/cdk/clipboard';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -8,25 +10,25 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import { BitConfig, BitService } from 'ngx-bit';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+import { AppService } from '@vanx/framework';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzImageService } from 'ng-zorro-antd/image';
+import { NzListComponent } from 'ng-zorro-antd/list';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalComponent, NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { NzImageService } from 'ng-zorro-antd/image';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { take } from 'rxjs/operators';
-import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
-import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { LayoutService } from '@vanx/framework';
-import { MediaService } from './media.service';
+import { BitConfig, BitService } from 'ngx-bit';
+
+import * as packer from './language';
 import { MediaTypeService } from './media-type.service';
 import { MediaDataSource } from './media.data-source';
-import * as packer from './language';
-import { NzListComponent } from 'ng-zorro-antd/list';
+import { MediaService } from './media.service';
 
 @Component({
   selector: 'v-media',
@@ -67,9 +69,9 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   @ViewChild('deleteModalContentTpl') deleteModalContentTpl!: TemplateRef<any>;
 
   constructor(
-    public config: BitOptions,
+    public config: BitConfig,
     public bit: BitService,
-    public system: LayoutService,
+    public app: AppService,
     private mediaService: MediaService,
     private mediaTypeService: MediaTypeService,
     private clipboard: Clipboard,
@@ -117,7 +119,7 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   }
 
   fetchBoundY(): void {
-    this.system.content.pipe(take(1)).subscribe(content => {
+    this.app.content.pipe(take(1)).subscribe(content => {
       const node = content.nativeElement;
       let height = node.offsetHeight;
       for (const el of node.children[0].children) {
@@ -162,7 +164,7 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   }
 
   getTypeLists(): void {
-    this.mediaTypeService.originLists().subscribe(data => {
+    this.mediaTypeService.api.originLists().subscribe((data: any) => {
       this.typeLists = data;
       for (const x of data) {
         this.typeMap.set(x.id, x);
@@ -185,7 +187,7 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
     if (!this.ds.lists.hasSearch('type_id') || Object.keys(this.typeCount).length === 0) {
       return [this.bit.l.all, '0'];
     }
-    const typeId = this.ds.lists.search.type_id.value;
+    const typeId = this.ds.lists.search.type_id.value as any;
     switch (typeId) {
       case '':
         return [this.bit.l.all, this.typeCount.total];
@@ -209,7 +211,7 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   }
 
   preview(data: any): void {
-    this.image.preview([{ src: this.bit.static + data.url }]);
+    this.image.preview([{ src: this.bit.assets + data.url }]);
   }
 
   openTypeDrawer(): void {
@@ -232,12 +234,12 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
     if (!this.typeName) {
       return;
     }
-    this.mediaTypeService
+    this.mediaTypeService.api
       .add({
         name: this.typeName
       })
-      .subscribe(res => {
-        if (!res.error) {
+      .subscribe((v: any) => {
+        if (!v.error) {
           this.addTypeCancel();
           this.getTypeLists();
           this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
@@ -265,13 +267,13 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
     if (!data.editName) {
       return;
     }
-    this.mediaTypeService
+    this.mediaTypeService.api
       .edit({
         id: data.id,
         name: data.editName
       })
-      .subscribe(res => {
-        if (!res.error) {
+      .subscribe((v: any) => {
+        if (!v.error) {
           data.name = data.editName;
           this.editTypeCancel();
           this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
@@ -282,8 +284,8 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   }
 
   editTypeDelete(id: any[]): void {
-    this.mediaTypeService.delete(id).subscribe(res => {
-      if (!res.error) {
+    this.mediaTypeService.api.delete(id).subscribe((v: any) => {
+      if (!v.error) {
         this.getTypeLists();
         this.notification.success(this.bit.l.success, this.bit.l.deleteSuccess);
       } else {
@@ -328,7 +330,7 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
   }
 
   copy(data: any): void {
-    data.copied = this.clipboard.copy(this.bit.static + data.url);
+    data.copied = this.clipboard.copy(this.bit.assets + data.url);
     setTimeout(() => {
       data.copied = false;
     }, 1000);
@@ -356,13 +358,13 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
         controls[key].updateValueAndValidity();
       }
     }
-    this.mediaService
+    this.mediaService.api
       .edit({
         id: this.renameData.id,
         name: this.renameForm.value.name
       })
-      .subscribe(res => {
-        if (!res.error) {
+      .subscribe((v: any) => {
+        if (!v.error) {
           this.notification.success(this.bit.l.success, this.bit.l.updateSuccess);
           this.renameData.name = this.renameForm.value.name;
           this.closeRenameModal();
@@ -423,8 +425,8 @@ export class MediaComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   submitDelete(): void {
     const ids = this.deleteData.map(v => v.id);
-    this.mediaService.delete(ids).subscribe(res => {
-      if (!res.error) {
+    this.mediaService.api.delete(ids).subscribe((v: any) => {
+      if (!v.error) {
         this.notification.success(this.bit.l.success, this.bit.l.deleteSuccess);
         this.closeDeleteModal();
         this.getCount();

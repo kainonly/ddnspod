@@ -1,53 +1,35 @@
 import { Injectable } from '@angular/core';
-import { BitConfig, BitCurdCommonService, BitHttpService, BitService } from 'ngx-bit';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Api, BitConfig, BitService, UploadOption } from 'ngx-bit';
+
 @Injectable()
 export class MediaService {
-  private model!: string;
+  api!: Api;
 
-  constructor(
-    private http: BitHttpService,
-    private curd: BitCurdCommonService,
-    private bit: BitService,
-    private config: BitOptions
-  ) {}
+  constructor(private bit: BitService, private config: BitConfig) {}
 
   setModel(value: string): void {
-    this.model = value;
-  }
-
-  lists(search: any, refresh: boolean, persistence: boolean): Observable<any> {
-    return this.curd.lists(this.model, search, {
-      refresh,
-      persistence
-    });
+    this.api = this.bit.api(value);
   }
 
   bulkAdd(data: any): Observable<any> {
-    return this.http.req(this.model + '/bulkAdd', data);
-  }
-
-  edit(data: any): Observable<any> {
-    return this.curd.edit(this.model, data);
+    return this.api.send(`bulkAdd`, data);
   }
 
   bulkEdit(data: any): Observable<any> {
-    return this.http.req(this.model + '/bulkEdit', data);
-  }
-
-  delete(id: any[]): Observable<any> {
-    return this.curd.delete(this.model, id);
+    return this.api.send(`bulkEdit`, data);
   }
 
   count(): Observable<any> {
-    return this.http.req(this.model + '/count').pipe(map(res => (!res.error ? res.data : null)));
+    return this.api.send(`count`).pipe(map((v: any) => (!v.error ? v.data : null)));
   }
 
   thumb(path: string, withStatic = true): string {
     let thumbOption = '';
-    switch (this.config.api.uploadStorage) {
+    const option = this.config.upload as UploadOption;
+    switch (option.storage) {
       case 'oss':
         thumbOption = '?x-oss-process=image/auto-orient,1/resize,m_lfit,w_200,limit_0/quality,q_80/format,webp';
         break;
@@ -57,7 +39,7 @@ export class MediaService {
     }
     let url = path + thumbOption;
     if (withStatic) {
-      url = this.bit.static + url;
+      url = this.bit.assets + url;
     }
     return url;
   }

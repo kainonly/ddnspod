@@ -1,7 +1,9 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+
 import { ListByPage } from 'ngx-bit';
+
 import { MediaService } from './media.service';
 
 export class MediaDataSource extends DataSource<any> {
@@ -55,7 +57,7 @@ export class MediaDataSource extends DataSource<any> {
       return;
     }
     this.pages.add(this.lists.index);
-    this.lists.ready.pipe(switchMap(() => this.media.lists(this.lists, refresh, true))).subscribe(data => {
+    this.lists.ready.pipe(switchMap(() => this.media.api.lists(this.lists, refresh, true))).subscribe((data: any) => {
       const stack: any[] = [];
       this.lists.data.splice(this.lists.index * this.lists.limit, this.lists.limit, ...data);
       this.lists.data.forEach((value, index) => {

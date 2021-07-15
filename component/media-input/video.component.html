@@ -18,7 +18,7 @@
         <nz-spin [nzIndicator]="indicator" [nzSpinning]="file.status === 'uploading'">
           <video
             *ngIf="file.status === 'done'"
-            [src]="file.originFileObj ? bit.static + file.originFileObj.key : file.url"
+            [src]="file.originFileObj ? bit.assets + file.originFileObj.key : file.url"
             class="video-context"
             controls="controls"
           ></video>
@@ -36,7 +36,7 @@
         </ng-template>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <a target="_blank" [href]="file.originFileObj ? bit.static + file.originFileObj.key : file.url">
+            <a target="_blank" [href]="file.originFileObj ? bit.assets + file.originFileObj.key : file.url">
               <i nz-icon nzType="download"></i> {{ bit.l['download'] }}
             </a>
           </nz-list-item-action>
