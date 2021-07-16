@@ -226,7 +226,7 @@
   </ng-container>
 </nz-drawer>
 
-<nz-ribbon [nzText]="bit.l['typeCount'] | Print: currentCount()">
+<nz-ribbon [nzText]="bit.l['typeCount']">
   <nz-card [nzTitle]="title">
     <cdk-virtual-scroll-viewport class="infinite-container" itemSize="231.5" [ngStyle]="{ 'height.px': boundY }">
       <nz-list *ngIf="ds" #listPanel nzGrid [nzLoading]="ds.updating">
@@ -337,7 +337,7 @@
     <form *ngIf="renameData" nz-form nzLayout="vertical" [formGroup]="renameForm">
       <nz-form-item>
         <nz-form-label nzRequired>
-          <span [innerHTML]="bit.l['renameLabel'] | Print: [renameData.name]"></span>
+          <span [innerHTML]="bit.l['renameLabel']"></span>
         </nz-form-label>
         <nz-form-control>
           <input formControlName="name" nz-input [placeholder]="bit.l['namePlaceholder']" />
@@ -358,7 +358,7 @@
     <form *ngIf="moveData" nz-form nzLayout="vertical" [formGroup]="moveForm">
       <nz-form-item>
         <nz-form-label nzRequired>
-          <span [innerHTML]="bit.l['moveLabel'] | Print: [moveData.length.toString()]"></span>
+          <span [innerHTML]="bit.l['moveLabel']"></span>
         </nz-form-label>
         <nz-form-control [nzExtra]="typeExtra">
           <nz-select nzShowSearch formControlName="type_id" [nzPlaceHolder]="bit.l['movePlaceholder']">
@@ -388,7 +388,7 @@
 >
   <ng-container *nzModalContent>
     <ng-container *ngIf="deleteData">
-      <p [innerHTML]="bit.l['deleteLabel'] | Print: [deleteData.length.toString()]"></p>
+      <p [innerHTML]="bit.l['deleteLabel']"></p>
       <nz-list nzSize="small">
         <nz-list-item *ngFor="let item of deleteData">- {{ item.name }}</nz-list-item>
       </nz-list>
