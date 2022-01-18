@@ -1,0 +1,7 @@
+url: "...<需要响应值是 JSON 包含客户端 `ip` 的网络回调>"
+path: "/"
+cron: "@every 5s"
+dnspod:
+  token: "<id>,<token>"
+  domain: "youself.com"
+  record: "@"
