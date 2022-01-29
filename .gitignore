@@ -20,4 +20,4 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-/config.yml
+config/config.yml
