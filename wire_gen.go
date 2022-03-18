@@ -7,9 +7,9 @@
 package main
 
 import (
+	"ddnspod/app"
 	"ddnspod/bootstrap"
 	"ddnspod/common"
-	"ddnspod/schedule"
 	"github.com/robfig/cron/v3"
 )
 
@@ -17,13 +17,15 @@ import (
 
 func Schedule(value *common.Values) (*cron.Cron, error) {
 	dnspod := bootstrap.UseDnspod(value)
+	observed := bootstrap.UseObserved(value)
 	webhook := bootstrap.UseWebhook(value)
-	task := &schedule.Task{
-		Values:  value,
-		Dnspod:  dnspod,
-		Webhook: webhook,
+	task := &app.Task{
+		Values:   value,
+		Observed: observed,
+		Dnspod:   dnspod,
+		Webhook:  webhook,
 	}
-	cronCron, err := schedule.New(value, dnspod, task)
+	cronCron, err := app.New(value, dnspod, task)
 	if err != nil {
 		return nil, err
 	}

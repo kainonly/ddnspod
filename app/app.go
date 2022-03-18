@@ -1,10 +1,10 @@
-package schedule
+package app
 
 import (
 	"ddnspod/common"
 	"github.com/google/wire"
 	"github.com/robfig/cron/v3"
-	"log"
+	"github.com/sirupsen/logrus"
 )
 
 var Provides = wire.NewSet(
@@ -12,7 +12,11 @@ var Provides = wire.NewSet(
 	New,
 )
 
-func New(values *common.Values, dnspod *common.Dnspod, task *Task) (c *cron.Cron, err error) {
+func New(
+	values *common.Values,
+	dnspod *common.Dnspod,
+	task *Task,
+) (c *cron.Cron, err error) {
 	if err = dnspod.Get(); err != nil {
 		return
 	}
@@ -24,23 +28,18 @@ func New(values *common.Values, dnspod *common.Dnspod, task *Task) (c *cron.Cron
 }
 
 type Task struct {
-	Values  *common.Values
-	Dnspod  *common.Dnspod
-	Webhook *common.Webhook
+	Values   *common.Values
+	Observed *common.Observed
+	Dnspod   *common.Dnspod
+	Webhook  *common.Webhook
 }
 
 func (x *Task) Run() {
-	defer func() {
-		if err := recover(); err != nil {
-			log.Println(err)
-		}
-	}()
-	log.Println("Task.Run->")
-	data, err := x.Webhook.Get()
+	data, err := x.Observed.Get()
 	if err != nil {
 		panic(err)
 	}
-	log.Println("Webhook.Ip", data.Ip)
+	logrus.Infof("当前客户端IP <%s>", data.Ip)
 	if x.Dnspod.RecordValue == data.Ip {
 		return
 	}
