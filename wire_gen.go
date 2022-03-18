@@ -8,6 +8,7 @@ package main
 
 import (
 	"ddnspod/app"
+	"ddnspod/bootstrap"
 	"ddnspod/common"
 	"github.com/robfig/cron/v3"
 )
@@ -15,8 +16,13 @@ import (
 // Injectors from wire.go:
 
 func Schedule(value *common.Values) (*cron.Cron, error) {
+	client, err := bootstrap.UsePulsar(value)
+	if err != nil {
+		return nil, err
+	}
 	service := &app.Service{
 		Values: value,
+		Pulsar: client,
 	}
 	task := &app.Task{
 		Service: service,
