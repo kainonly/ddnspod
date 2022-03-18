@@ -9,6 +9,14 @@ dnspod:
   token: "<id>,<token>"
   domain: "awesome.com"
   record: "@"
+
+## Hook 自定义回调，当 IP 变更成功后触发并发送 Pulsar 队列
+## 个人试验，例如：本地 IP 发生变动自动变更线上服务器安全组、白名单等等
+## 场景类似不妨采用 TDMQ Pulsar 配合云函数实现
+pulsar:
+  url:
+  token:
+  topic:
 ```
 
 用于返回真实客户端 IP 需要响应值是 JSON 且包含客户端 ip，例如：

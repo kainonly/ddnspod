@@ -28,4 +28,11 @@ func (x *Task) Run() {
 		panic(err)
 	}
 	log.Printf("记录值变更 <%s>", ip)
+	if x.Values.Pulsar == nil {
+		return
+	}
+	if err = x.Service.Hook(ip); err != nil {
+		panic(err)
+	}
+	log.Println("队列事件已发送")
 }

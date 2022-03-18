@@ -1,11 +1,11 @@
 package common
 
 type Values struct {
-	Url      string    `yaml:"url"`
-	Cron     string    `yaml:"cron"`
-	Dnspod   Dnspod    `yaml:"dnspod"`
-	Webhooks []Webhook `yaml:"webhooks"`
-	Record   *Record   `yaml:"-"`
+	Url    string  `yaml:"url"`
+	Cron   string  `yaml:"cron"`
+	Dnspod Dnspod  `yaml:"dnspod"`
+	Pulsar *Pulsar `yaml:"pulsar"`
+	Record *Record `yaml:"-"`
 }
 
 type Dnspod struct {
@@ -14,10 +14,10 @@ type Dnspod struct {
 	Record string `yaml:"record"`
 }
 
-type Webhook struct {
-	Type   string            `yaml:"type"`
-	Url    string            `yaml:"url"`
-	Option map[string]string `yaml:"option"`
+type Pulsar struct {
+	Url   string `yaml:"url"`
+	Token string `yaml:"token"`
+	Topic string `yaml:"topic"`
 }
 
 type Record struct {

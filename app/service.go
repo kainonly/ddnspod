@@ -1,16 +1,19 @@
 package app
 
 import (
+	"context"
 	"ddnspod/common"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/apache/pulsar-client-go/pulsar"
 	"net/http"
 	"net/url"
 )
 
 type Service struct {
 	*common.Values
+	Pulsar pulsar.Client
 }
 
 type IpDto struct {
@@ -125,8 +128,19 @@ func (x *Service) RecordModify(value string) (err error) {
 	return
 }
 
-// Webhook 自定义回调，当 IP 变更成功后触发
-// 例如：动态修改网络安全组
-func (x *Service) Webhook() {
-
+// Hook 自定义回调，当 IP 变更成功后触发
+func (x *Service) Hook(ip string) (err error) {
+	var producer pulsar.Producer
+	if producer, err = x.Pulsar.CreateProducer(pulsar.ProducerOptions{
+		Topic: x.Values.Pulsar.Topic,
+	}); err != nil {
+		return
+	}
+	defer producer.Close()
+	if _, err = producer.Send(context.TODO(), &pulsar.ProducerMessage{
+		Payload: []byte(ip),
+	}); err != nil {
+		return
+	}
+	return
 }
