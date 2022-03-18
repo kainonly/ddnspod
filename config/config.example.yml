@@ -1,5 +1,4 @@
-url: "...<需要响应值是 JSON 包含客户端 `ip` 的网络回调>"
-path: "/"
+url: "...<返回真实客户端的网络地址>"
 cron: "@every 5s"
 dnspod:
   token: "<id>,<token>"

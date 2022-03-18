@@ -8,7 +8,6 @@ package main
 
 import (
 	"ddnspod/app"
-	"ddnspod/bootstrap"
 	"ddnspod/common"
 	"github.com/robfig/cron/v3"
 )
@@ -16,16 +15,14 @@ import (
 // Injectors from wire.go:
 
 func Schedule(value *common.Values) (*cron.Cron, error) {
-	dnspod := bootstrap.UseDnspod(value)
-	observed := bootstrap.UseObserved(value)
-	webhook := bootstrap.UseWebhook(value)
-	task := &app.Task{
-		Values:   value,
-		Observed: observed,
-		Dnspod:   dnspod,
-		Webhook:  webhook,
+	service := &app.Service{
+		Values: value,
 	}
-	cronCron, err := app.New(value, dnspod, task)
+	task := &app.Task{
+		Service: service,
+		Values:  value,
+	}
+	cronCron, err := app.New(value, service, task)
 	if err != nil {
 		return nil, err
 	}
