@@ -1,22 +1,23 @@
 package common
 
 type Values struct {
-	Url     string        `yaml:"url"`
-	Cron    string        `yaml:"cron"`
-	Dnspod  DnspodValues  `yaml:"dnspod"`
-	Webhook WebhookValues `yaml:"webhook"`
-	Record  *Record       `yaml:"-"`
+	Url      string    `yaml:"url"`
+	Cron     string    `yaml:"cron"`
+	Dnspod   Dnspod    `yaml:"dnspod"`
+	Webhooks []Webhook `yaml:"webhooks"`
+	Record   *Record   `yaml:"-"`
 }
 
-type DnspodValues struct {
+type Dnspod struct {
 	Token  string `yaml:"token"`
 	Domain string `yaml:"domain"`
 	Record string `yaml:"record"`
 }
 
-type WebhookValues struct {
-	Url    string `yaml:"url"`
-	Secret string `yaml:"secret"`
+type Webhook struct {
+	Type   string            `yaml:"type"`
+	Url    string            `yaml:"url"`
+	Option map[string]string `yaml:"option"`
 }
 
 type Record struct {
