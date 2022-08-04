@@ -4,7 +4,7 @@
 
 ```yaml
 url: "..." # 返回真实客户端的网络地址
-cron: "5s" # 每5秒检测一次
+duration: "5s" # 每5秒检测一次
 dnspod:
   token: "<id>,<token>"
   domain: "awesome.com"
