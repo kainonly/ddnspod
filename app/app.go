@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/google/wire"
 	"github.com/kainonly/ddnspod/common"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -24,8 +24,11 @@ func (x *App) Run() (ticker *time.Ticker, err error) {
 	if err = x.SetRecord(); err != nil {
 		return
 	}
-	log.Printf("获取记录ID [%s] 记录值 <%s>", x.Values.Record.Id, x.Values.Record.Value)
-
+	color.Green("[%s]: 获取记录ID <%s> 记录值 <%s>",
+		time.Now().Format("2006/01/02 15:04:05"),
+		x.Values.Record.Id,
+		x.Values.Record.Value,
+	)
 	// 定时监听
 	ticker = time.NewTicker(x.Values.Duration)
 	for range ticker.C {
@@ -43,14 +46,14 @@ func (x *App) Watch() (err error) {
 	if ip, err = x.FetchIp(); err != nil {
 		return
 	}
-	log.Printf("客户端 <%s>", ip)
+	color.Black("[%s]: 监听IP <%s>", time.Now().Format("2006/01/02 15:04:05"), ip)
 	if x.Values.Record.Value == ip {
 		return
 	}
 	if err = x.RecordModify(ip); err != nil {
 		return
 	}
-	log.Printf("记录值变更 <%s>", ip)
+	color.Blue("[%s]: 域名记录值变更 <%s>", time.Now().Format("2006/01/02 15:04:05"), ip)
 	return
 }
 
