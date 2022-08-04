@@ -1,5 +1,5 @@
 url: "...<网络回调地址>"
-cron: "5s"
+duration: "5s"
 dnspod:
   token: "<id>,<token>"
   domain: "youself.com"
