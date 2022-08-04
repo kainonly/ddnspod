@@ -1,23 +1,18 @@
 package common
 
+import "time"
+
 type Values struct {
-	Url    string  `yaml:"url"`
-	Cron   string  `yaml:"cron"`
-	Dnspod Dnspod  `yaml:"dnspod"`
-	Pulsar *Pulsar `yaml:"pulsar"`
-	Record *Record `yaml:"-"`
+	Url      string        `yaml:"url"`
+	Duration time.Duration `yaml:"duration"`
+	Dnspod   Dnspod        `yaml:"dnspod"`
+	Record   *Record       `yaml:"-"`
 }
 
 type Dnspod struct {
 	Token  string `yaml:"token"`
 	Domain string `yaml:"domain"`
 	Record string `yaml:"record"`
-}
-
-type Pulsar struct {
-	Url   string `yaml:"url"`
-	Token string `yaml:"token"`
-	Topic string `yaml:"topic"`
 }
 
 type Record struct {

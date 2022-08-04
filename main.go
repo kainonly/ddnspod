@@ -1,22 +1,20 @@
 package main
 
 import (
-	"ddnspod/bootstrap"
+	"github.com/kainonly/ddnspod/bootstrap"
 	"os"
 	"os/signal"
 )
 
 func main() {
-	values, err := bootstrap.SetValues()
+	app, err := bootstrap.OkLetsGo()
 	if err != nil {
 		panic(err)
 	}
 
-	c, err := Schedule(values)
-	if err != nil {
+	if _, err = app.Run(); err != nil {
 		panic(err)
 	}
-	c.Start()
 
 	exit := make(chan os.Signal, 1)
 	signal.Notify(exit, os.Interrupt)

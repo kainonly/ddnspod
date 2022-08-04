@@ -1,19 +1,57 @@
 package app
 
 import (
-	"context"
-	"ddnspod/common"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/apache/pulsar-client-go/pulsar"
+	"github.com/google/wire"
+	"github.com/kainonly/ddnspod/common"
+	"log"
 	"net/http"
 	"net/url"
+	"time"
 )
 
-type Service struct {
-	*common.Values
-	Pulsar pulsar.Client
+var Provides = wire.NewSet(
+	wire.Struct(new(App), "*"),
+)
+
+type App struct {
+	Values *common.Values
+}
+
+func (x *App) Run() (ticker *time.Ticker, err error) {
+	if err = x.SetRecord(); err != nil {
+		return
+	}
+	log.Printf("获取记录ID [%s] 记录值 <%s>", x.Values.Record.Id, x.Values.Record.Value)
+
+	// 定时监听
+	ticker = time.NewTicker(x.Values.Duration)
+	for range ticker.C {
+		// 异常直接终止
+		if err = x.Watch(); err != nil {
+			return
+		}
+	}
+
+	return
+}
+
+func (x *App) Watch() (err error) {
+	var ip string
+	if ip, err = x.FetchIp(); err != nil {
+		return
+	}
+	log.Printf("客户端 <%s>", ip)
+	if x.Values.Record.Value == ip {
+		return
+	}
+	if err = x.RecordModify(ip); err != nil {
+		return
+	}
+	log.Printf("记录值变更 <%s>", ip)
+	return
 }
 
 type IpDto struct {
@@ -37,14 +75,13 @@ type IpDto struct {
 // 	"name": "api",
 // 	"time": "2022-03-18T01:02:28.487910218Z"
 // }
-func (x *Service) FetchIp() (ip string, err error) {
+func (x *App) FetchIp() (ip string, err error) {
 	var resp *http.Response
-	if resp, err = http.Get(x.Url); err != nil {
+	if resp, err = http.Get(x.Values.Url); err != nil {
 		return
 	}
 	var body IpDto
-	if err = json.NewDecoder(resp.Body).
-		Decode(&body); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&body); err != nil {
 		return
 	}
 	return body.Ip, nil
@@ -65,19 +102,19 @@ type RecordDto struct {
 }
 
 // BaseURL 使用文档：https://docs.dnspod.cn/api/
-func (x *Service) dnspod(path string) string {
+func (x *App) dnspod(path string) string {
 	return fmt.Sprintf(`https://dnsapi.cn/%s`, path)
 }
 
 // SetRecord 获取域名记录信息并暂存状态
-func (x *Service) SetRecord() (err error) {
+func (x *App) SetRecord() (err error) {
 	var resp *http.Response
 	if resp, err = http.PostForm(x.dnspod("Record.List"),
 		url.Values{
-			"login_token": []string{x.Dnspod.Token},
+			"login_token": []string{x.Values.Dnspod.Token},
 			"format":      []string{"json"},
-			"domain":      []string{x.Dnspod.Domain},
-			"sub_domain":  []string{x.Dnspod.Record},
+			"domain":      []string{x.Values.Dnspod.Domain},
+			"sub_domain":  []string{x.Values.Dnspod.Record},
 			"record_type": []string{"A"},
 		},
 	); err != nil {
@@ -103,13 +140,13 @@ type RecordModifyDto struct {
 }
 
 // RecordModify 修改记录值
-func (x *Service) RecordModify(value string) (err error) {
+func (x *App) RecordModify(value string) (err error) {
 	var resp *http.Response
 	if resp, err = http.PostForm(x.dnspod("Record.Modify"), url.Values{
-		"login_token": []string{x.Dnspod.Token},
+		"login_token": []string{x.Values.Dnspod.Token},
 		"format":      []string{"json"},
-		"domain":      []string{x.Dnspod.Domain},
-		"record_id":   []string{x.Record.Id},
+		"domain":      []string{x.Values.Dnspod.Domain},
+		"record_id":   []string{x.Values.Record.Id},
 		"record_type": []string{"A"},
 		"record_line": []string{"默认"},
 		"value":       []string{value},
@@ -125,22 +162,5 @@ func (x *Service) RecordModify(value string) (err error) {
 		return errors.New("记录修改请求失败")
 	}
 	x.Values.Record.Value = value
-	return
-}
-
-// Hook 自定义回调，当 IP 变更成功后触发
-func (x *Service) Hook(ip string) (err error) {
-	var producer pulsar.Producer
-	if producer, err = x.Pulsar.CreateProducer(pulsar.ProducerOptions{
-		Topic: x.Values.Pulsar.Topic,
-	}); err != nil {
-		return
-	}
-	defer producer.Close()
-	if _, err = producer.Send(context.TODO(), &pulsar.ProducerMessage{
-		Payload: []byte(ip),
-	}); err != nil {
-		return
-	}
 	return
 }
