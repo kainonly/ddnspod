@@ -58,26 +58,13 @@ func (x *App) Watch() (err error) {
 }
 
 type IpDto struct {
-	Ip string `json:"ip"`
+	Headers struct {
+		Ip []string `json:"X-Real-Ip"`
+	} `json:"headers"`
 }
 
 // FetchIp 用于返回真实客户端 IP
-// 需要响应值是 JSON 且包含客户端 ip，例如：
-// GET https://api.kainonly.com
-// Accept: application/json
-//
-// HTTP/1.1 200 OK
-// Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-// Content-Length: 75
-// Content-Type: application/json; charset=utf-8
-// Date: Fri, 18 Mar 2022 01:02:28 GMT
-// X-Request-Id: 4628ce86-6c4c-43c5-b6fc-10b662c7057e
-//
-// {
-// 	"ip": "xxx.xxx.xxx.xxx",
-// 	"name": "api",
-// 	"time": "2022-03-18T01:02:28.487910218Z"
-// }
+// 使用 https://hub.docker.com/r/traefik/whoami
 func (x *App) FetchIp() (ip string, err error) {
 	var resp *http.Response
 	if resp, err = http.Get(x.Values.Url); err != nil {
@@ -87,7 +74,11 @@ func (x *App) FetchIp() (ip string, err error) {
 	if err = json.NewDecoder(resp.Body).Decode(&body); err != nil {
 		return
 	}
-	return body.Ip, nil
+	if len(body.Headers.Ip) == 0 {
+		return "", fmt.Errorf("未获取到客户端 IP")
+	}
+	ip = body.Headers.Ip[0]
+	return
 }
 
 type StatusDto struct {
