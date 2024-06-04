@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/fatih/color"
 	"github.com/google/wire"
 	"github.com/kainonly/ddnspod/common"
 	"net/http"
@@ -24,7 +23,7 @@ func (x *App) Run() (ticker *time.Ticker, err error) {
 	if err = x.SetRecord(); err != nil {
 		return
 	}
-	color.Green("[%s]: 获取记录ID <%s> 记录值 <%s>",
+	println("[%s]: 获取记录ID <%s> 记录值 <%s>",
 		time.Now().Format("2006/01/02 15:04:05"),
 		x.Values.Record.Id,
 		x.Values.Record.Value,
@@ -46,14 +45,14 @@ func (x *App) Watch() (err error) {
 	if ip, err = x.FetchIp(); err != nil {
 		return
 	}
-	color.Black("[%s]: 监听IP <%s>", time.Now().Format("2006/01/02 15:04:05"), ip)
+	println("[%s]: 监听IP <%s>", time.Now().Format("2006/01/02 15:04:05"), ip)
 	if x.Values.Record.Value == ip {
 		return
 	}
 	if err = x.RecordModify(ip); err != nil {
 		return
 	}
-	color.Blue("[%s]: 域名记录值变更 <%s>", time.Now().Format("2006/01/02 15:04:05"), ip)
+	println("[%s]: 域名记录值变更 <%s>", time.Now().Format("2006/01/02 15:04:05"), ip)
 	return
 }
 
