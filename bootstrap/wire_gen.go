@@ -17,8 +17,13 @@ func OkLetsGo() (*app.App, error) {
 	if err != nil {
 		return nil, err
 	}
+	client, err := UseDnspod(values)
+	if err != nil {
+		return nil, err
+	}
 	appApp := &app.App{
 		Values: values,
+		Client: client,
 	}
 	return appApp, nil
 }

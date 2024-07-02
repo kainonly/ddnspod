@@ -2,16 +2,14 @@ package bootstrap
 
 import (
 	"fmt"
-	"github.com/google/wire"
 	"github.com/kainonly/ddnspod/common"
+	dnspodCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
+	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 	"gopkg.in/yaml.v3"
 	"os"
 )
 
-var Provides = wire.NewSet(LoadValues)
-
-// LoadValues 加载静态配置
-// 默认配置路径 ./config/config.yml
 func LoadValues() (values *common.Values, err error) {
 	path := "./config/config.yml"
 	if _, err = os.Stat(path); os.IsNotExist(err) {
@@ -25,4 +23,14 @@ func LoadValues() (values *common.Values, err error) {
 		return
 	}
 	return
+}
+
+func UseDnspod(values *common.Values) (*dnspod.Client, error) {
+	credential := dnspodCommon.NewCredential(
+		values.Dns.SecretId,
+		values.Dns.SecretKey,
+	)
+	cpf := profile.NewClientProfile()
+	cpf.HttpProfile.Endpoint = "dnspod.tencentcloudapi.com"
+	return dnspod.NewClient(credential, "", cpf)
 }
