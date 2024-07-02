@@ -1,6 +1,10 @@
 url: "...<网络回调地址>"
 duration: "5s"
-dnspod:
-  token: "<id>,<token>"
+dns:
+  secret_id: ""
+  secret_key: ""
   domain: "youself.com"
   record: "@"
+  record_id: ""
+
+

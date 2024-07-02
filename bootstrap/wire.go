@@ -10,7 +10,8 @@ import (
 
 func OkLetsGo() (*app.App, error) {
 	wire.Build(
-		Provides,
+		LoadValues,
+		UseDnspod,
 		app.Provides,
 	)
 	return &app.App{}, nil
