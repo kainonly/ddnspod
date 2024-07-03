@@ -96,6 +96,7 @@ func (x *App) RecordModify(value string) (err error) {
 	request.RecordLine = dnspodCommon.StringPtr("默认")
 	request.Value = dnspodCommon.StringPtr(value)
 	request.RecordId = dnspodCommon.Uint64Ptr(x.Values.Dns.RecordId)
+	request.SubDomain = dnspodCommon.StringPtr(x.Values.Dns.Record)
 	request.TTL = dnspodCommon.Uint64Ptr(60)
 	if _, err = x.Client.ModifyRecord(request); err != nil {
 		return
