@@ -14,10 +14,10 @@ github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e/go.mod h1:pJLUxLENpZxwdsK
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZVejAe8=
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.954 h1:rTDJ8BSdMG4G5r5gPlAkBpJgABmKItAe/5YRmgn4M9Q=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.954/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.954 h1:XtdKrrVJSgJYvFcIM0321AH2oFPvhPz6egHfQdrWZgM=
-github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.954/go.mod h1:p4+ssdR2ZYXgrlG/y5ubCLKWgv5t/sCqlP7HacQUc9M=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1093 h1:pkz4SrPMy3TLKwqwCH6gIgv6TqEvJKkyiq0sEFl8wb0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1093/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.1093 h1:ibq/lMocZeAi+Gv2MUVjQ51yeWJfDTm1kBhHh68owu4=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.1093/go.mod h1:JTEY0MF3RFUdL7yc8Yj+Dka9s4ayugoPFqD3LIDIYYQ=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20210921155107-089bfa567519/go.mod h1:GvvjBRRGRdwPK5ydBHafDWAxML/pGHZbMvKqRZ5+Abc=
