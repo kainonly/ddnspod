@@ -1,11 +1,11 @@
 module github.com/kainonly/ddnspod
 
-go 1.21.1
+go 1.23
 
 require (
 	github.com/google/wire v0.6.0
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.954
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.954
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1093
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.1093
 	gopkg.in/yaml.v3 v3.0.1
 )
 
