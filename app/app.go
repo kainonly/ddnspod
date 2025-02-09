@@ -56,7 +56,7 @@ func (x *App) Watch() (err error) {
 
 type IpDto struct {
 	Headers struct {
-		Ip []string `json:"X-Real-Ip"`
+		Ip []string `json:"X-Client-Ip"`
 	} `json:"headers"`
 }
 
