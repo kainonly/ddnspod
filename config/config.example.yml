@@ -5,6 +5,7 @@ dns:
   secret_key: ""
   domain: "youself.com"
   record: "@"
+  record_type: AAAA
   record_id: ""
 
 

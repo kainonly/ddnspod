@@ -9,9 +9,10 @@ type Values struct {
 }
 
 type TencentDNS struct {
-	SecretId  string `yaml:"secret_id"`
-	SecretKey string `yaml:"secret_key"`
-	Domain    string `yaml:"domain"`
-	Record    string `yaml:"record"`
-	RecordId  uint64 `yaml:"record_id"`
+	SecretId   string `yaml:"secret_id"`
+	SecretKey  string `yaml:"secret_key"`
+	Domain     string `yaml:"domain"`
+	Record     string `yaml:"record"`
+	RecordType string `yaml:"record_type"`
+	RecordId   uint64 `yaml:"record_id"`
 }
