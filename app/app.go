@@ -92,7 +92,7 @@ func (x *App) DescribeRecord() (value string, err error) {
 func (x *App) RecordModify(value string) (err error) {
 	request := dnspod.NewModifyRecordRequest()
 	request.Domain = dnspodCommon.StringPtr(x.Values.Dns.Domain)
-	request.RecordType = dnspodCommon.StringPtr("A")
+	request.RecordType = dnspodCommon.StringPtr(x.Values.Dns.RecordType)
 	request.RecordLine = dnspodCommon.StringPtr("默认")
 	request.Value = dnspodCommon.StringPtr(value)
 	request.RecordId = dnspodCommon.Uint64Ptr(x.Values.Dns.RecordId)
