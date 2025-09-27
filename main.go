@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/kainonly/ddnspod/bootstrap"
 	"os"
 	"os/signal"
+
+	"github.com/kainonly/ddnspod/bootstrap"
 )
 
 func main() {

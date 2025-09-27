@@ -2,12 +2,13 @@ package bootstrap
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/kainonly/ddnspod/common"
 	dnspodCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 	"gopkg.in/yaml.v3"
-	"os"
 )
 
 func LoadValues() (values *common.Values, err error) {
