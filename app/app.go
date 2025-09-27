@@ -3,12 +3,13 @@ package app
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/google/wire"
 	"github.com/kainonly/ddnspod/common"
 	dnspodCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
-	"net/http"
-	"time"
 )
 
 var Provides = wire.NewSet(
@@ -56,7 +57,7 @@ func (x *App) Watch() (err error) {
 
 type IpDto struct {
 	Headers struct {
-		Ip []string `json:"X-Client-Ip"`
+		Ip []string `json:"X-Forwarded-For"`
 	} `json:"headers"`
 }
 

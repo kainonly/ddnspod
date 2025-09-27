@@ -13,5 +13,3 @@ dns:
   record: "@"
   record_id: ""
 ```
-
-为兼容EdgeOne或全站加速等服务，需要将自定义IP头部设置为 `X-Client-Ip`，`X-Forwarded-For` 与 `X-Real-Ip` 将不可用
