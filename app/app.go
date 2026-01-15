@@ -6,15 +6,17 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/google/wire"
 	"github.com/kainonly/ddnspod/common"
 	dnspodCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 )
 
-var Provides = wire.NewSet(
-	wire.Struct(new(App), "*"),
-)
+func NewApp(values *common.Values, client *dnspod.Client) *App {
+	return &App{
+		Values: values,
+		Client: client,
+	}
+}
 
 type App struct {
 	Values *common.Values
