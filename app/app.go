@@ -6,17 +6,15 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/goforj/wire"
 	"github.com/kainonly/ddnspod/common"
 	dnspodCommon "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 )
 
-func NewApp(values *common.Values, client *dnspod.Client) *App {
-	return &App{
-		Values: values,
-		Client: client,
-	}
-}
+var Provides = wire.NewSet(
+	wire.Struct(new(App), "*"),
+)
 
 type App struct {
 	Values *common.Values
